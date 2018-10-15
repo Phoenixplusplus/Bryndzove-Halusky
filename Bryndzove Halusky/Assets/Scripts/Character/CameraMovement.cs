@@ -4,20 +4,26 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour {
 
-    public CharacterMovement characterMovement;
+    private CharacterMovement characterMovement;
     public float cameraSensitivity, cameraSensitivityDamp = 3f;
+    private Vector3 mouseRotation;
 
-	// Use this for initialization
-	void Start ()
+    void Awake()
     {
-        characterMovement = GameObject.Find("Character").GetComponent<CharacterMovement>();
+
+    }
+
+    // Use this for initialization
+    void Start ()
+    {
+        characterMovement = transform.parent.GetComponent<CharacterMovement>();
         cameraSensitivity = characterMovement.mouseSensitivity / cameraSensitivityDamp;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        RotateWithMouseY(355f, 20f);
+            RotateWithMouseY(355f, 20f);
     }
 
     // rotate camera only on x axis
@@ -27,7 +33,7 @@ public class CameraMovement : MonoBehaviour {
         if (transform.localEulerAngles.x >= upperClamp || transform.localEulerAngles.x <= lowerClamp)
         {
             float rawMouseRotation = Input.GetAxis("Mouse Y");
-            Vector3 mouseRotation = new Vector3(-rawMouseRotation, 0, 0);
+            mouseRotation = new Vector3(-rawMouseRotation, 0, 0);
 
             transform.Rotate(mouseRotation * cameraSensitivity, Space.Self);
         }

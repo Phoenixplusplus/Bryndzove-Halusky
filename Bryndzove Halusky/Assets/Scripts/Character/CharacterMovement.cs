@@ -2,22 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour {
+public class CharacterMovement : Photon.MonoBehaviour {
 
     public float mouseSensitivity = 3f, movementSpeed = 10f;
     public float WS, AD;
 
+    void Awake()
+    {
+
+    }
+
     // Use this for initialization
     void Start ()
     {
-		
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Move();
-        RotateWithMouseX();
+        if (photonView.isMine)
+        {
+            Move();
+            RotateWithMouseX();
+        }
     }
 
     void Move()

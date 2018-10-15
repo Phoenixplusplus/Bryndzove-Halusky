@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_BodyTilt : MonoBehaviour {
+public class C_BodyTilt : Photon.MonoBehaviour {
 
     private CharacterMovement characterMovement;
     private Vector3 WSADTilt;
     public float rotateRate = 100f;
 
+    void Awake()
+    {
+
+    }
+
 	// Use this for initialization
 	void Start ()
     {
         characterMovement = transform.parent.GetComponent<CharacterMovement>();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Tilt();
-
-        Debug.Log(WSADTilt);
+        if (photonView.isMine)
+        {
+            Tilt();
+        }
     }
 
     // set x,z rotation based on movement from charactermovement script
