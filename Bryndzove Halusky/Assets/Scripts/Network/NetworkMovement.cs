@@ -5,13 +5,13 @@ using UnityEngine;
 public class NetworkMovement : Photon.MonoBehaviour {
 
     private GameObject Character;
-    private CharacterMovement characterMovement;
-    private Vector3 networkPosition, networkVelocity, localVelocity;
+    private C_CharacterMovement characterMovement;
+    private Vector3 networkPosition, networkVelocity, localVelocity, predictedPosition;
     private Quaternion networkRotation;
-    private float MinMovementPerUpdate = 1, MaxMovementPerUpdate = 5;
-    public int sendRate = 16, serializedSendRate = 16;
+    public int sendRate = 30, serializedSendRate = 30;
     private float lerpTime;
     private double lastTimestamp;
+    private float movementSpeed;
 
     // Use this for initialization
     void Start ()
@@ -20,41 +20,53 @@ public class NetworkMovement : Photon.MonoBehaviour {
         PhotonNetwork.sendRateOnSerialize = serializedSendRate;
 
         Character = transform.root.gameObject;
-        characterMovement = Character.GetComponent<CharacterMovement>();
+        characterMovement = Character.GetComponent<C_CharacterMovement>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        
-        //lerpTime = Time.deltaTime / (1f / sendRate);
 
-        // lerp our movement/rotation from where network player sees us, to where we actually are
-        if (!photonView.isMine)
+
+        //predictedPosition = networkPosition + localVelocity * totalUpdateTime;
+
+        //// lerp position/rotation based on the send rate
+        //lerpTime = Time.deltaTime * sendRate;
+        //Debug.Log(lastUpdate);
+
+        if (photonView.isMine)
         {
-            // predict position based on current position, velocity and total turnaround time of packet
+            // do local stuff
+        }
+        else
+        {
+            // update position
+            // calculate roundtrip time for packet
             float ping = (float)PhotonNetwork.GetPing() * 0.001f;
             float lastUpdate = (float)(PhotonNetwork.time - lastTimestamp);
             float totalUpdateTime = ping + lastUpdate;
 
-            Vector3 predictedPosition = networkPosition + networkVelocity * totalUpdateTime;
+            //update position
+            predictedPosition = networkPosition + networkVelocity * movementSpeed * totalUpdateTime;
+            transform.position = Vector3.MoveTowards(transform.position, predictedPosition, Vector3.Distance(transform.position, predictedPosition) * sendRate * Time.deltaTime);
 
-            // lerp position/rotation based on the photon network send rate
-            lerpTime = Time.deltaTime / (1f / sendRate);
-            transform.position = Vector3.Lerp(transform.position, predictedPosition, lerpTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, lerpTime);
+            // update rotation
+            transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, 180f * sendRate * Time.deltaTime);
+
+            //transform.position = Vector3.MoveTowards(transform.position, predictedPosition, 10f * Time.deltaTime);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, 10f * Time.deltaTime);
         }
-	}
+    }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.isWriting)
         {
             // local component sending transform to the network
-            localVelocity = new Vector3(characterMovement.AD, 0f, characterMovement.WS);
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
-            stream.SendNext(localVelocity);
+            stream.SendNext(characterMovement.localVelocity);
+            stream.SendNext(characterMovement.movementSpeed);
         }
         else
         {
@@ -62,6 +74,7 @@ public class NetworkMovement : Photon.MonoBehaviour {
             networkPosition = (Vector3)stream.ReceiveNext();
             networkRotation = (Quaternion)stream.ReceiveNext();
             networkVelocity = (Vector3)stream.ReceiveNext();
+            movementSpeed = (float)stream.ReceiveNext();
             lastTimestamp = info.timestamp;
         }
     }

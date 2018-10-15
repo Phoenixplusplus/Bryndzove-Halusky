@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraMovement : MonoBehaviour {
+public class C_CameraMovement : MonoBehaviour {
 
-    private CharacterMovement characterMovement;
+    private C_CharacterMovement characterMovement;
     public float cameraSensitivity, cameraSensitivityDamp = 3f;
     private Vector3 mouseRotation;
 
@@ -16,7 +16,7 @@ public class CameraMovement : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        characterMovement = transform.parent.GetComponent<CharacterMovement>();
+        characterMovement = transform.parent.GetComponent<C_CharacterMovement>();
         cameraSensitivity = characterMovement.mouseSensitivity / cameraSensitivityDamp;
     }
 	

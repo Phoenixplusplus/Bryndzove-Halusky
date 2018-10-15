@@ -100,14 +100,14 @@ public class NetworkManager : Photon.MonoBehaviour {
 
         // -- activate local scripts (disabled for everyone else)
         // activate base scripts
-        localCharacter.GetComponent<CharacterMovement>().enabled = true;
+        localCharacter.GetComponent<C_CharacterMovement>().enabled = true;
         // activate child components
         localCharacter.transform.Find("CharacterCamera").gameObject.SetActive(true);
         // activate child scripts
         localCharacter.GetComponentInChildren<C_LArmTilt>().enabled = true;
         localCharacter.GetComponentInChildren<C_RArmTilt>().enabled = true;
         localCharacter.GetComponentInChildren<C_BodyTilt>().enabled = true;
-        localCharacter.GetComponentInChildren<CameraMovement>().enabled = true;
+        localCharacter.GetComponentInChildren<C_CameraMovement>().enabled = true;
 
         // -- disable local scripts (enabled for everyone else)
     }
