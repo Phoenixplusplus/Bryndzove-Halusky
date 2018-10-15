@@ -23,11 +23,11 @@ public class C_CameraMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-            RotateWithMouseY(355f, 20f);
+        RotatePitch(355f, 20f);
     }
 
     // rotate camera only on x axis
-    void RotateWithMouseY(float upperClamp, float lowerClamp)
+    void RotatePitch(float upperClamp, float lowerClamp)
     {
         // clamp rotation to parameter local eulers
         if (transform.localEulerAngles.x >= upperClamp || transform.localEulerAngles.x <= lowerClamp)

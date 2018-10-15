@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class C_BodyTilt : Photon.MonoBehaviour {
 
-    // local
     private C_CharacterMovement characterMovement;
     private Vector3 WSADTilt;
     public float rotateRate = 100f;

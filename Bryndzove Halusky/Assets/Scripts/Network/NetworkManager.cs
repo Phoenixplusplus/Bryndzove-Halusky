@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class NetworkManager : Photon.MonoBehaviour {
 
-    private const string roomName = "RoomName";
+    private string roomName = "I'm hungry";
     private TypedLobby lobbyName = new TypedLobby("NewLobby", LobbyType.Default);
     private RoomInfo[] roomsList;
     private GameManager GM;
-    private GameObject defaultCamera;
+    private GameObject lobbyCamera;
     public GameObject Character;
 
     // Use this for initialization
@@ -16,7 +16,7 @@ public class NetworkManager : Photon.MonoBehaviour {
     {
         PhotonNetwork.ConnectUsingSettings("v4.2");
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-        defaultCamera = GameObject.Find("DefaultCamera");
+        lobbyCamera = GameObject.Find("LobbyCamera");
 	}
 	
 	// Update is called once per frame
@@ -34,8 +34,9 @@ public class NetworkManager : Photon.MonoBehaviour {
         else if (PhotonNetwork.room == null)
         {
             // create room
-            if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
+            if (GUI.Button(new Rect(100, 100, 250, 100), "Create Server"))
             {
+                roomName = "Server " + roomsList.Length + 1;
                 PhotonNetwork.CreateRoom(roomName, new RoomOptions() { MaxPlayers = 4, IsOpen = true, IsVisible = true }, lobbyName);
             }
 
@@ -44,7 +45,7 @@ public class NetworkManager : Photon.MonoBehaviour {
             {
                 for (int i = 0; i < roomsList.Length; i++)
                 {
-                    if (GUI.Button(new Rect(100, 250 + (110 * i), 250, 100), "Join" + roomsList[i].Name))
+                    if (GUI.Button(new Rect(100, 250 + (110 * i), 250, 100), roomsList[i].Name + " - Players (" + roomsList[i].PlayerCount + "/" + roomsList[i].MaxPlayers + ")"))
                     {
                         PhotonNetwork.JoinRoom(roomsList[i].Name);
                     }
@@ -60,7 +61,6 @@ public class NetworkManager : Photon.MonoBehaviour {
 
     void OnReceivedRoomListUpdate()
     {
-        Debug.Log("Room was created");
         roomsList = PhotonNetwork.GetRoomList();
     }
 
@@ -73,21 +73,18 @@ public class NetworkManager : Photon.MonoBehaviour {
     {
         // lock/hide cursor and delete default camera
         GM.LockHideCursor();
-        if (defaultCamera != null) defaultCamera.SetActive(false);
+        if (lobbyCamera != null) lobbyCamera.SetActive(false);
+  
+        Debug.Log("Connected to " + "'" + PhotonNetwork.room.Name + "'" + " - Players(" + PhotonNetwork.playerList.Length + ")");
 
-        Debug.Log("Connected to room");
-        print(PhotonNetwork.playerList.Length);
-
-        // spawn in
         Spawn();
-
     }
 
     void Spawn()
     {
         GameObject localCharacter;
 
-        // note: we are spawning a character from a prefab, which is a 'base', the network character (the one the player is controlling)
+        // note: we are spawning a character from a prefab, which is a 'base', the network character (the one we are controlling)
         // is the localCharacter variable, which needs to have their components enabled
         if (PhotonNetwork.playerList.Length > 1)
         {

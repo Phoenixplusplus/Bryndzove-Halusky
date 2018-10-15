@@ -6,19 +6,20 @@ public class NetworkMovement : Photon.MonoBehaviour {
 
     private GameObject Character;
     private C_CharacterMovement characterMovement;
-    private Vector3 networkPosition, networkVelocity, localVelocity, predictedPosition;
+    private Vector3 networkPosition, networkVelocity, predictedPosition;
     private Quaternion networkRotation;
     public int sendRate = 30, serializedSendRate = 30;
-    private float lerpTime;
     private double lastTimestamp;
     private float movementSpeed;
 
     // Use this for initialization
     void Start ()
     {
+        // set network send rates
         PhotonNetwork.sendRate = sendRate;
         PhotonNetwork.sendRateOnSerialize = serializedSendRate;
 
+        // grab a reference to the root class (returns self if class == root)
         Character = transform.root.gameObject;
         characterMovement = Character.GetComponent<C_CharacterMovement>();
     }
@@ -26,21 +27,13 @@ public class NetworkMovement : Photon.MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-
-
-        //predictedPosition = networkPosition + localVelocity * totalUpdateTime;
-
-        //// lerp position/rotation based on the send rate
-        //lerpTime = Time.deltaTime * sendRate;
-        //Debug.Log(lastUpdate);
-
         if (photonView.isMine)
         {
-            // do local stuff
+            
         }
+        // update network player behaviour
         else
         {
-            // update position
             // calculate roundtrip time for packet
             float ping = (float)PhotonNetwork.GetPing() * 0.001f;
             float lastUpdate = (float)(PhotonNetwork.time - lastTimestamp);
@@ -52,9 +45,6 @@ public class NetworkMovement : Photon.MonoBehaviour {
 
             // update rotation
             transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, 180f * sendRate * Time.deltaTime);
-
-            //transform.position = Vector3.MoveTowards(transform.position, predictedPosition, 10f * Time.deltaTime);
-            //transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, 10f * Time.deltaTime);
         }
     }
 
