@@ -122,7 +122,7 @@ public class NetworkManager : Photon.MonoBehaviour {
         GameObject localL_Gun;
         Transform L_gunSlot = localCharacter.transform.Find("CharacterBody/CharacterLArm/LGunSlot");
 
-        localL_Gun = (GameObject)PhotonNetwork.Instantiate(RedShotgun.name, L_gunSlot.transform.position, new Quaternion(0, 0, 0, 0), 0);
+        localL_Gun = (GameObject)PhotonNetwork.Instantiate(RedShotgun.name, L_gunSlot.transform.position + new Vector3(0, 0.1f, 0), new Quaternion(0, 0, 0, 0), 0);
         localL_Gun.transform.parent = L_gunSlot;
 
         Debug.Log(localL_Gun.name + "Spawned at " + localL_Gun.transform.position);
