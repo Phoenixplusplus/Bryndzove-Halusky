@@ -11,6 +11,16 @@ public class NetworkManager : Photon.MonoBehaviour {
     private GameObject lobbyCamera;
     public GameObject Character;
 
+    [Header("Weapons")]
+    [HeaderAttribute("Red Team")]
+    public GameObject RedPistol;
+    public GameObject RedMachineGun;
+    public GameObject RedShotgun;
+    [HeaderAttribute("Blue Team")]
+    public GameObject BluePistol;
+    public GameObject BlueMachineGun;
+    public GameObject BlueShotgun;
+
     // Use this for initialization
     void Start ()
     {
@@ -77,10 +87,10 @@ public class NetworkManager : Photon.MonoBehaviour {
   
         Debug.Log("Connected to " + "'" + PhotonNetwork.room.Name + "'" + " - Players(" + PhotonNetwork.playerList.Length + ")");
 
-        Spawn();
+        SetupAndSpawnCharacter();
     }
 
-    void Spawn()
+    void SetupAndSpawnCharacter()
     {
         GameObject localCharacter;
 
@@ -97,6 +107,7 @@ public class NetworkManager : Photon.MonoBehaviour {
 
         // -- activate local scripts (disabled for everyone else)
         // activate base scripts
+        localCharacter.GetComponent<C_Character>().enabled = true;
         localCharacter.GetComponent<C_CharacterMovement>().enabled = true;
         // activate child components
         localCharacter.transform.Find("CharacterCamera").gameObject.SetActive(true);
@@ -105,7 +116,15 @@ public class NetworkManager : Photon.MonoBehaviour {
         localCharacter.GetComponentInChildren<C_RArmTilt>().enabled = true;
         localCharacter.GetComponentInChildren<C_BodyTilt>().enabled = true;
         localCharacter.GetComponentInChildren<C_CameraMovement>().enabled = true;
-
         // -- disable local scripts (enabled for everyone else)
+
+        // spawn weapon
+        GameObject localL_Gun;
+        Transform L_gunSlot = localCharacter.transform.Find("CharacterBody/CharacterLArm/LGunSlot");
+
+        localL_Gun = (GameObject)PhotonNetwork.Instantiate(RedShotgun.name, L_gunSlot.transform.position, new Quaternion(0, 0, 0, 0), 0);
+        localL_Gun.transform.parent = L_gunSlot;
+
+        Debug.Log(localL_Gun.name + "Spawned at " + localL_Gun.transform.position);
     }
 }
