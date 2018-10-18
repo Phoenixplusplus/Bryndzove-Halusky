@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4458688855130708}
   - component: {fileID: 114679438378286444}
   - component: {fileID: 114502447727303558}
+  - component: {fileID: 114536532667242740}
   m_Layer: 0
   m_Name: RedPistol
   m_TagString: Untagged
@@ -244,6 +245,23 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &114536532667242740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1030686635499024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd4b5ad763811643984863a4800378d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipSize: 12
+  ammoCount: 12
+  shotDelay: 0.01
+  reloadDelay: 0.8
+  shotSound: {fileID: 0}
+  shotSpeed: 1
 --- !u!114 &114679438378286444
 MonoBehaviour:
   m_ObjectHideFlags: 1

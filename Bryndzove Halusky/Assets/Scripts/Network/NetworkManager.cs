@@ -168,15 +168,18 @@ public class NetworkManager : Photon.MonoBehaviour {
 
         if (localCharacter.GetComponent<C_Character>().Team == "Red")
         {
-            localL_Gun = (GameObject)PhotonNetwork.Instantiate(RedShotgun.name, L_gunSlot.transform.position + new Vector3(0, 0.1f, 0), localCharacter.transform.rotation, 0);
+            localL_Gun = (GameObject)PhotonNetwork.Instantiate(RedMachineGun.name, L_gunSlot.transform.position + new Vector3(0, 0.1f, 0), localCharacter.transform.rotation, 0);
             localL_Gun.transform.parent = L_gunSlot;
         }
         else
         {
-            localL_Gun = (GameObject)PhotonNetwork.Instantiate(BlueShotgun.name, L_gunSlot.transform.position + new Vector3(0, 0.1f, 0), localCharacter.transform.rotation, 0);
+            localL_Gun = (GameObject)PhotonNetwork.Instantiate(BlueMachineGun.name, L_gunSlot.transform.position + new Vector3(0, 0.1f, 0), localCharacter.transform.rotation, 0);
             localL_Gun.transform.parent = L_gunSlot;
         }
+        // give a reference to it to the localcharacter
+        localCharacter.GetComponent<C_Character>().lw = localL_Gun;
+        localCharacter.GetComponent<C_Character>().NetworkStart();
 
-        Debug.Log(localL_Gun.name + "Spawned at " + localL_Gun.transform.position);
+
     }
 }

@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4529794965959690}
   - component: {fileID: 114698728119704466}
   - component: {fileID: 114083353723056548}
+  - component: {fileID: 114805737649266462}
   m_Layer: 0
   m_Name: BlueMachineGun
   m_TagString: Untagged
@@ -257,3 +258,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sendRate: 30
   serializedSendRate: 30
+--- !u!114 &114805737649266462
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1362689546627228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4fa88040a51696468418371350ecfdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipSize: 30
+  ammoCount: 30
+  shotDelay: 0.2
+  reloadDelay: 1.5
+  shotSound: {fileID: 0}
+  shotSpeed: 1

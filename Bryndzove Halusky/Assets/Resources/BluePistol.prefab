@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4836626822557822}
   - component: {fileID: 114958407310850902}
   - component: {fileID: 114514410508356304}
+  - component: {fileID: 114722271868693994}
   m_Layer: 0
   m_Name: BluePistol
   m_TagString: Untagged
@@ -244,6 +245,23 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &114722271868693994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1123990018270136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd4b5ad763811643984863a4800378d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipSize: 12
+  ammoCount: 12
+  shotDelay: 0.01
+  reloadDelay: 0.8
+  shotSound: {fileID: 0}
+  shotSpeed: 1
 --- !u!114 &114958407310850902
 MonoBehaviour:
   m_ObjectHideFlags: 1

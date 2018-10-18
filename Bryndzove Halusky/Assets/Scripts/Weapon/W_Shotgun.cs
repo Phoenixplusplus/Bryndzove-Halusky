@@ -1,0 +1,39 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class W_Shotgun : W_Weapon {
+
+    W_Shotgun()
+    {
+        clipSize = 8;
+        ammoCount = 8;
+        shotDelay = 1.0f;
+        reloadDelay = 3f;
+        shotSpeed = 1f;
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public override bool Fire()
+    {
+        return base.Fire();
+        // do other shotgun only related stuff below if needed
+    }
+
+    public override bool Reload()
+    {
+        return base.Reload();
+        // do other shotgun only related stuff below if needed
+    }
+}

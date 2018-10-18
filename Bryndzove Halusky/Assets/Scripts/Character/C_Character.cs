@@ -14,8 +14,22 @@ public class C_Character : Photon.MonoBehaviour {
     public float movementSpeed;
     public Texture headTex, bodyTex;
 
-	// Use this for initialization
-	void Start ()
+    // do not assign these values in editor
+    public GameObject lw, rw;
+    public W_Weapon leftWeapon, rightWeapon;
+
+    private bool autoFire;
+
+    // called by network manager to give reference to new gameobjects
+    public void NetworkStart()
+    {
+        leftWeapon = lw.GetComponent<W_Weapon>();
+        if (leftWeapon.name.Contains("Machine")) autoFire = true;
+        else autoFire = false;
+    }
+
+    // Use this for initialization
+    void Start ()
     {
 
 	}
@@ -23,6 +37,24 @@ public class C_Character : Photon.MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		
-	}
+        // keyboard input
+        if (autoFire == true)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                leftWeapon.Fire();
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                leftWeapon.Fire();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            leftWeapon.Reload();
+        }
+    } 
 }

@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 23789772883182962}
   - component: {fileID: 114100597585262406}
   - component: {fileID: 114699238420039942}
+  - component: {fileID: 114178656334525686}
   m_Layer: 0
   m_Name: RedShotgun
   m_TagString: Untagged
@@ -128,6 +129,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sendRate: 30
   serializedSendRate: 30
+--- !u!114 &114178656334525686
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1111206162669652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a670026f3550e743b6efe2e8ad2f8bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipSize: 8
+  ammoCount: 8
+  shotDelay: 1
+  reloadDelay: 3
+  shotSound: {fileID: 0}
+  shotSpeed: 1
 --- !u!114 &114699238420039942
 MonoBehaviour:
   m_ObjectHideFlags: 1
