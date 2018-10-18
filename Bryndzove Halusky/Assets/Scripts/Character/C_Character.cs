@@ -14,10 +14,6 @@ public class C_Character : Photon.MonoBehaviour {
     public float movementSpeed;
     public Texture headTex, bodyTex;
 
-    [Header("Weapons")]
-    public GameObject L_Gun;
-    public GameObject R_Gun;
-
 	// Use this for initialization
 	void Start ()
     {

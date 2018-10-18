@@ -21,6 +21,10 @@ public class NetworkManager : Photon.MonoBehaviour {
     public GameObject BlueMachineGun;
     public GameObject BlueShotgun;
 
+    [Header("Teams")]
+    int redTeamCount;
+    int blueTeamCount;
+
     // Use this for initialization
     void Start ()
     {
@@ -116,14 +120,62 @@ public class NetworkManager : Photon.MonoBehaviour {
         localCharacter.GetComponentInChildren<C_RArmTilt>().enabled = true;
         localCharacter.GetComponentInChildren<C_BodyTilt>().enabled = true;
         localCharacter.GetComponentInChildren<C_CameraMovement>().enabled = true;
-        // -- disable local scripts (enabled for everyone else)
+        // -- disable local scripts (enabled for everyone else) if needed
+
+        // team setup
+        // find all characters in the server currently as see which team they're on
+        GameObject[] playerRefs = GameObject.FindGameObjectsWithTag("Character");
+
+        for (int i = 0; i < playerRefs.Length; i++)
+        {
+            if (playerRefs[i].GetComponent<C_Character>().Team == "Red") redTeamCount++;
+            if (playerRefs[i].GetComponent<C_Character>().Team == "Blue") blueTeamCount++;
+        }
+
+        // pick a team based on teamcount
+        if (redTeamCount > blueTeamCount) localCharacter.GetComponent<C_Character>().Team = "Blue";
+        else if (blueTeamCount > redTeamCount) localCharacter.GetComponent<C_Character>().Team = "Red";
+        else
+        {
+            int rand = Random.Range(1, 3);
+            if (rand == 1)
+            {
+                localCharacter.GetComponent<C_Character>().Team = "Blue";
+                blueTeamCount++;
+            }
+            else
+            {
+                localCharacter.GetComponent<C_Character>().Team = "Red";
+                redTeamCount++;
+            }
+        }
+
+        // move to spawn point
+        GameObject[] spawnPointRefs = GameObject.FindGameObjectsWithTag("SpawnPoint");
+
+        for (int i = 0; i < spawnPointRefs.Length; i++)
+        {
+            if (localCharacter.GetComponent<C_Character>().Team == spawnPointRefs[i].GetComponent<SpawnPoint>().Team && spawnPointRefs[i].GetComponent<SpawnPoint>().Occupied == false)
+            {
+                localCharacter.transform.position = spawnPointRefs[i].transform.position;
+                localCharacter.transform.rotation = spawnPointRefs[i].transform.rotation;
+            }
+        }
 
         // spawn weapon
         GameObject localL_Gun;
         Transform L_gunSlot = localCharacter.transform.Find("CharacterBody/CharacterLArm/LGunSlot");
 
-        localL_Gun = (GameObject)PhotonNetwork.Instantiate(RedShotgun.name, L_gunSlot.transform.position + new Vector3(0, 0.1f, 0), new Quaternion(0, 0, 0, 0), 0);
-        localL_Gun.transform.parent = L_gunSlot;
+        if (localCharacter.GetComponent<C_Character>().Team == "Red")
+        {
+            localL_Gun = (GameObject)PhotonNetwork.Instantiate(RedShotgun.name, L_gunSlot.transform.position + new Vector3(0, 0.1f, 0), localCharacter.transform.rotation, 0);
+            localL_Gun.transform.parent = L_gunSlot;
+        }
+        else
+        {
+            localL_Gun = (GameObject)PhotonNetwork.Instantiate(BlueShotgun.name, L_gunSlot.transform.position + new Vector3(0, 0.1f, 0), localCharacter.transform.rotation, 0);
+            localL_Gun.transform.parent = L_gunSlot;
+        }
 
         Debug.Log(localL_Gun.name + "Spawned at " + localL_Gun.transform.position);
     }

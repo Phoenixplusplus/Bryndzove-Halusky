@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 114371414758176632}
   m_Layer: 0
   m_Name: CharacterBody
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -753,8 +753,6 @@ MonoBehaviour:
   movementSpeed: 0
   headTex: {fileID: 0}
   bodyTex: {fileID: 0}
-  L_Gun: {fileID: 1565989104628548, guid: 48bd423a4874dd64d9d64016f2d6b3f6, type: 2}
-  R_Gun: {fileID: 0}
 --- !u!114 &114999832938344910
 MonoBehaviour:
   m_ObjectHideFlags: 1
