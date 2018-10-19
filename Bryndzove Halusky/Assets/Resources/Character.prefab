@@ -492,7 +492,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -753,6 +753,10 @@ MonoBehaviour:
   movementSpeed: 0
   headTex: {fileID: 0}
   bodyTex: {fileID: 0}
+  lw: {fileID: 0}
+  rw: {fileID: 0}
+  leftWeapon: {fileID: 0}
+  rightWeapon: {fileID: 0}
 --- !u!114 &114999832938344910
 MonoBehaviour:
   m_ObjectHideFlags: 1
