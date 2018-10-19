@@ -24,6 +24,7 @@ public class C_Character : Photon.MonoBehaviour {
     public void NetworkStart()
     {
         leftWeapon = lw.GetComponent<W_Weapon>();
+        leftWeapon.enabled = true;
         if (leftWeapon.name.Contains("Machine")) autoFire = true;
         else autoFire = false;
     }
