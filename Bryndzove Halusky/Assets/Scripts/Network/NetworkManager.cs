@@ -49,14 +49,15 @@ public class NetworkManager : Photon.MonoBehaviour {
         }
         else if (PhotonNetwork.room == null)
         {
-            // create room
-            if (GUI.Button(new Rect(100, 100, 250, 100), "Create Server"))
-            {
-                roomName = "Server " + roomsList.Length + 1;
-                PhotonNetwork.CreateRoom(roomName, new RoomOptions() { MaxPlayers = 4, IsOpen = true, IsVisible = true }, lobbyName);
-            }
+          // create room
+          //  if (GUI.Button(new Rect(100, 100, 250, 100), "Create Server"))
+          //  {
+          //      roomName = "Server " + roomsList.Length + 1;
+          //      PhotonNetwork.CreateRoom(roomName, new RoomOptions() { MaxPlayers = 4, IsOpen = true, IsVisible = true }, lobbyName);
+          //  }
 
             // join room
+            /*
             if (roomsList != null)
             {
                 for (int i = 0; i < roomsList.Length; i++)
@@ -67,6 +68,7 @@ public class NetworkManager : Photon.MonoBehaviour {
                     }
                 }
             }
+            */
         }
     }
 
@@ -75,6 +77,22 @@ public class NetworkManager : Photon.MonoBehaviour {
         roomName = "Server " + roomsList.Length + 1;
         PhotonNetwork.CreateRoom(roomName, new RoomOptions() { MaxPlayers = 4, IsOpen = true, IsVisible = true }, lobbyName);
     }
+
+    public void JoinRoom(int roomNumber)
+    {
+        PhotonNetwork.JoinRoom(roomsList[roomNumber].Name);
+    }
+
+    public RoomInfo GetRoomInfo(int roomNumber)
+    {
+        return roomsList[roomNumber];
+    }
+
+    public RoomInfo [] GetRoomList()
+    {
+        return roomsList;
+    }
+
 
     void OnConnectedToMaster()
     {
