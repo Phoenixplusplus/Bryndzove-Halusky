@@ -9,6 +9,7 @@ public class NetworkManager : Photon.MonoBehaviour {
     private RoomInfo[] roomsList;
     private GameManager GM;
     private GameObject lobbyCamera;
+    private UserInterfaceManager UI_Manager;
     public GameObject Character;
 
     [Header("Weapons")]
@@ -26,18 +27,19 @@ public class NetworkManager : Photon.MonoBehaviour {
     int blueTeamCount = 0;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         PhotonNetwork.ConnectUsingSettings("v4.2");
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+        UI_Manager = GameObject.Find("UserInterfaceManager").GetComponent<UserInterfaceManager>();
         lobbyCamera = GameObject.Find("LobbyCamera");
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
-		
-	}
+
+    }
 
     void OnGUI()
     {
@@ -68,6 +70,12 @@ public class NetworkManager : Photon.MonoBehaviour {
         }
     }
 
+    public void CreateNewRoom()
+    {
+        roomName = "Server " + roomsList.Length + 1;
+        PhotonNetwork.CreateRoom(roomName, new RoomOptions() { MaxPlayers = 4, IsOpen = true, IsVisible = true }, lobbyName);
+    }
+
     void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby(lobbyName);
@@ -88,7 +96,7 @@ public class NetworkManager : Photon.MonoBehaviour {
         // lock/hide cursor and delete default camera
         GM.LockHideCursor();
         if (lobbyCamera != null) lobbyCamera.SetActive(false);
-  
+
         Debug.Log("Connected to " + "'" + PhotonNetwork.room.Name + "'" + " - Players(" + PhotonNetwork.playerList.Length + ")");
 
         SetupAndSpawnCharacter();
@@ -121,4 +129,11 @@ public class NetworkManager : Photon.MonoBehaviour {
         localCharacter.GetComponentInChildren<C_BodyTilt>().enabled = true;
         localCharacter.GetComponentInChildren<C_CameraMovement>().enabled = true;
     }
+
+
+    public RoomInfo GetRoom(int roomNumber)
+    {
+        return roomsList[roomNumber];
+    }
+
 }
