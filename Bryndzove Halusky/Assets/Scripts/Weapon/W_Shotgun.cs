@@ -10,19 +10,19 @@ public class W_Shotgun : W_Weapon {
         ammoCount = 8;
         shotDelay = 1.0f;
         reloadDelay = 3f;
-        shotSpeed = 1f;
+        shotSpeed = 10f;
     }
 
     // Use this for initialization
     void Start()
     {
-
+        SetPaintballColour();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public override bool Fire()
@@ -35,5 +35,11 @@ public class W_Shotgun : W_Weapon {
     {
         return base.Reload();
         // do other shotgun only related stuff below if needed
+    }
+
+    public override void CreatePaintball()
+    {
+        base.Muzzle = transform.Find("Muzzle");
+        base.CreatePaintball();
     }
 }

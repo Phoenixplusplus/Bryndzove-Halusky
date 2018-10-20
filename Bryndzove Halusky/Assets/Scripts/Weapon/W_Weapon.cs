@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class W_Weapon : MonoBehaviour {
+public class W_Weapon : Photon.MonoBehaviour {
+
+    private C_Character Character;
+    public GameObject Paintball;
 
     [Header("Attributes")]
     public int clipSize;
@@ -11,6 +14,10 @@ public class W_Weapon : MonoBehaviour {
     public float shotDelay;
     public AudioSource shotSound;
     public float shotSpeed;
+    public Transform Muzzle;
+
+    [Header("Networking")]
+    public int paintballID = 0;
 
     private float shotTime = 0f;
     private float reloadTime = 0f;
@@ -20,13 +27,13 @@ public class W_Weapon : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-
+        Character = transform.root.gameObject.GetComponent<C_Character>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Debug.Log(shotTime);
+
     }
 
     public virtual bool Fire()
@@ -35,7 +42,8 @@ public class W_Weapon : MonoBehaviour {
 
         ammoCount = ammoCount - 1;
         StartCoroutine(RunShotDelay());
-        Debug.Log("Shooting.. Delay of " + shotDelay + " seconds");
+        Debug.Log("Shooting.. Delay of " + shotDelay + " seconds - Paintball colour is " + Paintball.GetComponent<Renderer>().sharedMaterial);
+        CreatePaintball();
         return true;
     }
 
@@ -46,6 +54,18 @@ public class W_Weapon : MonoBehaviour {
         Debug.Log("Reloading.. Delay of " + reloadDelay + " seconds");
         StartCoroutine(RunReloadDelay());
         return true;
+    }
+
+    public virtual void CreatePaintball()
+    {
+
+    }
+
+    public void SetPaintballColour()
+    {
+        Character = transform.root.gameObject.GetComponent<C_Character>();
+        if (Character.Team == "Red") Paintball.GetComponent<Renderer>().material = Paintball.GetComponent<P_Paintball>().redColour;
+        else Paintball.GetComponent<Renderer>().material = Paintball.GetComponent<P_Paintball>().blueColour;
     }
 
     // weapon coroutines

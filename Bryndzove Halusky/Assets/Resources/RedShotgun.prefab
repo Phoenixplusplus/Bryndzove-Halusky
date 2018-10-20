@@ -140,12 +140,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a670026f3550e743b6efe2e8ad2f8bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Paintball: {fileID: 1456266222574426, guid: ccc79cfab293de049af0f6a4a4f82dd1, type: 2}
   clipSize: 8
   ammoCount: 8
   reloadDelay: 3
   shotDelay: 1
   shotSound: {fileID: 0}
-  shotSpeed: 1
+  shotSpeed: 10
+  Muzzle: {fileID: 0}
 --- !u!114 &114699238420039942
 MonoBehaviour:
   m_ObjectHideFlags: 1

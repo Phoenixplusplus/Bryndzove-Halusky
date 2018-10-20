@@ -45,4 +45,7 @@ MonoBehaviour:
   - test
   - networkEnter
   - networkExit
+  - NetworkCreatePaintball
+  - DeclareTeam
+  - PickTeam
   DisableAutoOpenWizard: 1
