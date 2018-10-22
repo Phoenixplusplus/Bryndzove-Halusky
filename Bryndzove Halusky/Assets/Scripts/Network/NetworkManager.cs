@@ -12,16 +12,6 @@ public class NetworkManager : Photon.MonoBehaviour {
     private UserInterfaceManager UI_Manager;
     public GameObject Character;
 
-    [Header("Weapons")]
-    [HeaderAttribute("Red Team")]
-    public GameObject RedPistol;
-    public GameObject RedMachineGun;
-    public GameObject RedShotgun;
-    [HeaderAttribute("Blue Team")]
-    public GameObject BluePistol;
-    public GameObject BlueMachineGun;
-    public GameObject BlueShotgun;
-
     [Header("Teams")]
     int redTeamCount = 0;
     int blueTeamCount = 0;

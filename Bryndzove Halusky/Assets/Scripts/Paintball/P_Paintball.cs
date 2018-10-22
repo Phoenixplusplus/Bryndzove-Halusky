@@ -12,7 +12,7 @@ public class P_Paintball : MonoBehaviour {
     public double creationTime;
     public Vector3 Position;
     public Quaternion Rotation;
-    public int ID;
+    public double ID;
     public float speed = 1f;
 
     // Use this for initialization

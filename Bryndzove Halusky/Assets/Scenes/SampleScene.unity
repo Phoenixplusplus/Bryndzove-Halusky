@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -205,6 +205,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6edf31986144a41868a534c68873e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  redTeamCount: 0
+  blueTeamCount: 0
+  paintballID: 0
 --- !u!4 &107218005
 Transform:
   m_ObjectHideFlags: 0
@@ -404,6 +407,11 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 114855329593733468, guid: bb6df86156fcdf54cac4565f5aea988c,
+        type: 2}
+      propertyPath: synchronization
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb6df86156fcdf54cac4565f5aea988c, type: 2}
   m_IsPrefabAsset: 0
@@ -588,16 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b4740e8851829428ee21ea19a76e39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Character: {fileID: 1458677205437712, guid: ec9ca44681b18b242995402298c7a09e, type: 2}
-  RedPistol: {fileID: 1123990018270136, guid: c0430354c65db234782c9e6498cc6076, type: 2}
-  RedMachineGun: {fileID: 1362689546627228, guid: 9821587bc411ba9469e3f30ca3128428,
-    type: 2}
-  RedShotgun: {fileID: 1353291089636274, guid: fdc0ce25fa6fa85498d99330198c4f8a, type: 2}
-  BluePistol: {fileID: 1030686635499024, guid: 2a7079fe19cc6e240a41794fd48c243d, type: 2}
-  BlueMachineGun: {fileID: 1211005564746502, guid: a677a7dfe4a03534aa111a5dca489a1a,
-    type: 2}
-  BlueShotgun: {fileID: 1111206162669652, guid: 736a48ca58f979940978994de3fc5f4a,
-    type: 2}
+  Character: {fileID: 1170824106911934, guid: e448c9754b010b24e8f8362116349b73, type: 2}
 --- !u!1 &495861319 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1746112142527732, guid: 9f18d80024b72e54281673e39838996c,

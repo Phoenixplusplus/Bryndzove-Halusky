@@ -48,4 +48,9 @@ MonoBehaviour:
   - NetworkCreatePaintball
   - DeclareTeam
   - PickTeam
+  - UpdateManagerTeams
+  - ManagerUpdateTeams
+  - AttachWeapon
+  - TriggerEnter
+  - TriggerExit
   DisableAutoOpenWizard: 1

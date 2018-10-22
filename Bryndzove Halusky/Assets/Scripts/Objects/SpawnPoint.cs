@@ -8,6 +8,8 @@ public class SpawnPoint : Photon.MonoBehaviour {
     public string Team;
     public bool Occupied = false;
 
+    public int health = 10;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -22,29 +24,34 @@ public class SpawnPoint : Photon.MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (photonView.isMine)
         {
-            photonView.RPC("networkEnter", PhotonTargets.All, 1);
+            if (other.gameObject.tag == "Player")
+            {
+                photonView.RPC("TriggerEnter", PhotonTargets.All, null);
+            }
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (photonView.isMine)
         {
-            photonView.RPC("networkExit", PhotonTargets.All, 1);
+            if (other.tag == "Player")
+            {
+                photonView.RPC("TriggerExit", PhotonTargets.All, null);
+            }
         }
     }
 
-    [PunRPC]
-    void networkEnter(int i)
+    [PunRPC] void TriggerEnter()
     {
         Occupied = true;
         Debug.Log(Occupied);
+        if (PhotonNetwork.isMasterClient) health = health - 1;
     }
 
-    [PunRPC]
-    void networkExit(int i)
+    [PunRPC] void TriggerExit()
     {
         Occupied = false;
         Debug.Log(Occupied);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class W_Weapon : Photon.MonoBehaviour {
 
-    private C_Character Character;
+    public C_Character Character;
     public GameObject Paintball;
 
     [Header("Attributes")]
@@ -15,9 +15,6 @@ public class W_Weapon : Photon.MonoBehaviour {
     public AudioSource shotSound;
     public float shotSpeed;
     public Transform Muzzle;
-
-    [Header("Networking")]
-    public int paintballID = 0;
 
     private float shotTime = 0f;
     private float reloadTime = 0f;

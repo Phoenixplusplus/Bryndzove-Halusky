@@ -14,6 +14,8 @@ public class C_Character : Photon.MonoBehaviour {
     public float movementSpeed;
     public Texture headTex, bodyTex;
 
+    public GameManager gameManager;
+
     // do not assign these values in editor
     public W_Weapon leftWeapon, rightWeapon;
 
@@ -25,7 +27,12 @@ public class C_Character : Photon.MonoBehaviour {
         // on spawn from network manager
         if (photonView.isMine)
         {
-            PickTeam(Random.Range(0,3));
+            if (PhotonNetwork.isMasterClient == true) Debug.Log("I am master client");
+
+            // pick a team based on players in server send as buffed so others that join know
+            int rand = Random.Range(0, 3);
+            photonView.RPC("PickTeam", PhotonTargets.AllBuffered, rand);
+
             MoveToSpawnPoint();
             AttachWeapon();
         }
@@ -61,6 +68,7 @@ public class C_Character : Photon.MonoBehaviour {
             }
             if (Input.GetKeyDown(KeyCode.V))
             {
+                // debug to check teams
                 GameObject[] go = GameObject.FindGameObjectsWithTag("Character");
 
                 for (int i = 0; i < go.Length; i++)
@@ -86,9 +94,17 @@ public class C_Character : Photon.MonoBehaviour {
         }
 
         // pick a team based on teamcount
-        if (redTeamCount > blueTeamCount) Team = "Blue";
-        if (blueTeamCount > redTeamCount) Team = "Red";
-        if (blueTeamCount == redTeamCount)
+        if (redTeamCount > blueTeamCount)
+        {
+            Team = "Blue";
+            blueTeamCount++;
+        }
+        else if (blueTeamCount > redTeamCount)
+        {
+            Team = "Red";
+            redTeamCount++;
+        }
+        else
         {
             if (rand == 1)
             {
@@ -102,10 +118,11 @@ public class C_Character : Photon.MonoBehaviour {
             }
         }
 
-        // send to server
-        if (photonView.isMine)
+        // if this client happens to be master, find and update GameManager
+        if (PhotonNetwork.isMasterClient == true)
         {
-            photonView.RPC("PickTeam", PhotonTargets.OthersBuffered, rand);
+            GameObject.Find("GameManager").GetComponent<GameManager>().redTeamCount = redTeamCount;
+            GameObject.Find("GameManager").GetComponent<GameManager>().blueTeamCount = blueTeamCount;
         }
     }
 
