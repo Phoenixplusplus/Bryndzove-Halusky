@@ -15,6 +15,7 @@ public class W_Weapon : Photon.MonoBehaviour {
     public AudioSource shotSound;
     public float shotSpeed;
     public Transform Muzzle;
+    public Vector3 paintballColour;
 
     private float shotTime = 0f;
     private float reloadTime = 0f;
@@ -56,13 +57,6 @@ public class W_Weapon : Photon.MonoBehaviour {
     public virtual void CreatePaintball()
     {
 
-    }
-
-    public void SetPaintballColour()
-    {
-        Character = transform.root.gameObject.GetComponent<C_Character>();
-        if (Character.Team == "Red") Paintball.GetComponent<Renderer>().material = Paintball.GetComponent<P_Paintball>().redColour;
-        else Paintball.GetComponent<Renderer>().material = Paintball.GetComponent<P_Paintball>().blueColour;
     }
 
     // weapon coroutines

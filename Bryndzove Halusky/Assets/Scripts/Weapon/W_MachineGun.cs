@@ -10,13 +10,13 @@ public class W_MachineGun : W_Weapon {
         ammoCount = 30;
         shotDelay = 0.2f;
         reloadDelay = 1.5f;
-        shotSpeed = 5f;
+        shotSpeed = 30f;
     }
 
     // Use this for initialization
     void Start ()
     {
-        SetPaintballColour();
+        Character = transform.root.gameObject.GetComponent<C_Character>();
     }
 	
 	// Update is called once per frame
@@ -42,27 +42,25 @@ public class W_MachineGun : W_Weapon {
         base.Muzzle = transform.Find("Muzzle");
         base.CreatePaintball();
 
-        Vector3 colour;
-        // determine the colour of paintball
-        if (Character.Team == "Red") colour = new Vector3(1, 0, 0);
-        else colour = new Vector3(0, 0, 1);
+        // set paintball colour
+        if (Character.Team == "Red") paintballColour = new Vector3(1, 0, 0);
+        else paintballColour = new Vector3(0, 0, 1);
 
         photonView.RPC("NetworkCreatePaintball", PhotonTargets.All, new object[] 
-        { Muzzle.transform.position, Muzzle.transform.rotation, colour, shotSpeed});
+        { Muzzle.transform.position, Muzzle.transform.rotation, paintballColour, shotSpeed, Character.Team});
     }
 
     [PunRPC]
-    public void NetworkCreatePaintball(Vector3 position, Quaternion rotation, Vector3 colour, float speed)
+    public void NetworkCreatePaintball(Vector3 position, Quaternion rotation, Vector3 colour, float speed, string team)
     {
         GameObject pPaintball;
         pPaintball = Instantiate(Paintball, position, rotation);
         pPaintball.GetComponent<Renderer>().material.color = new Color(colour.x, colour.y, colour.z, 1);
-        pPaintball.GetComponent<P_Paintball>().speed = speed;
-        pPaintball.GetComponent<P_Paintball>().ID = PhotonNetwork.time;
-        if (base.photonView.isMine == false)
+        pPaintball.GetComponent<P_Paintball>().Speed = speed;
+        pPaintball.GetComponent<P_Paintball>().Team = team;
+        if (!base.photonView.isMine)
         {
-            GameObject.Find("Character(Clone)").GetComponent<C_Character>().Team = "Pink";
-            Debug.Log("hello");
+            Debug.Log("Other player fired");
         }
     }
 }

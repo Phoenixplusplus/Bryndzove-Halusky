@@ -5,15 +5,12 @@ using UnityEngine;
 public class P_Paintball : MonoBehaviour {
 
     [Header("Attributes")]
-    public Material redColour;
-    public Material blueColour;
-
-    [Header("Networking")]
-    public double creationTime;
     public Vector3 Position;
     public Quaternion Rotation;
-    public double ID;
-    public float speed = 1f;
+    public string Team;
+    public float Speed = 1f;
+    public float Timeout = 0f;
+    public float maxTimeout = 5f;
 
     // Use this for initialization
     void Start ()
@@ -24,6 +21,27 @@ public class P_Paintball : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        transform.position = transform.position + transform.forward * (Time.deltaTime * speed);
+        transform.position = transform.position + transform.forward * (Time.deltaTime * Speed);
+
+        Timeout += Time.deltaTime;
+        if (Timeout > maxTimeout) DestroyPaintball();
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            C_Character character = other.transform.root.GetComponent<C_Character>();
+            if (character.Team != Team)
+            {
+                other.transform.root.GetComponent<C_Character>().Health--;
+                DestroyPaintball();
+            }
+        }
+    }
+
+    void DestroyPaintball()
+    {
+        Destroy(gameObject);
+    }
 }

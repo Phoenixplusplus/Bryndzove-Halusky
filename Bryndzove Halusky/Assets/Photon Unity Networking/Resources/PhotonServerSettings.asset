@@ -53,4 +53,5 @@ MonoBehaviour:
   - AttachWeapon
   - TriggerEnter
   - TriggerExit
+  - DestroyPaintball
   DisableAutoOpenWizard: 1

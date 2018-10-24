@@ -23,7 +23,7 @@ public class C_CameraMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        RotatePitch(355f, 20f);
+        RotatePitch(355f, 40f); // default =  RotatePitch(355f, 20f);
     }
 
     // rotate camera only on x axis

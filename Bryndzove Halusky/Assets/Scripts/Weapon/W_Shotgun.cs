@@ -10,13 +10,13 @@ public class W_Shotgun : W_Weapon {
         ammoCount = 8;
         shotDelay = 1.0f;
         reloadDelay = 3f;
-        shotSpeed = 10f;
+        shotSpeed = 30f;
     }
 
     // Use this for initialization
     void Start()
     {
-        SetPaintballColour();
+        Character = transform.root.gameObject.GetComponent<C_Character>();
     }
 
     // Update is called once per frame
