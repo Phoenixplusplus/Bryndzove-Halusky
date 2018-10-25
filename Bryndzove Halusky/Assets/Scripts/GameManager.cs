@@ -8,8 +8,9 @@ public class GameManager : MonoBehaviour {
     public int redTeamCount = 0;
     public int blueTeamCount = 0;
 
-    [Header("Paintball")]
-    public int paintballID = 0;
+    [Header("Paint")]
+    public int redTeamPaintCount = 0;
+    public int blueTeamPaintCount = 0;
 
 	// Use this for initialization
 	void Start ()

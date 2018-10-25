@@ -54,4 +54,5 @@ MonoBehaviour:
   - TriggerEnter
   - TriggerExit
   - DestroyPaintball
+  - UpdateGameManagerPaint
   DisableAutoOpenWizard: 1

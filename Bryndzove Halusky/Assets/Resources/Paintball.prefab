@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 135945300615241768}
   - component: {fileID: 114166537647985080}
   - component: {fileID: 54238988262697090}
+  - component: {fileID: 114986268073722538}
   m_Layer: 0
   m_Name: Paintball
   m_TagString: Paintball
@@ -112,11 +113,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bcddb2a3c9911f41833d29b7fd61da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creationTime: 0
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0, w: 0}
-  ID: 0
-  speed: 1
+  Team: 
+  Speed: 1
+  Timeout: 0
+  maxTimeout: 5
+--- !u!114 &114986268073722538
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1456266222574426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!135 &135945300615241768
 SphereCollider:
   m_ObjectHideFlags: 1
