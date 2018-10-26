@@ -70,21 +70,11 @@ public class C_Character : Photon.MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.V))
             {
                 // debug to check team paint count
-                GameObject[] go = GameObject.FindGameObjectsWithTag("Scene");
-                int redTeamPaint = 0;
-                int blueTeamPaint = 0;
-
-                for (int i = 0; i < go.Length; i++)
+                if (PhotonNetwork.isMasterClient)
                 {
-                    Color redColour = new Color(1, 0, 0, 1);
-                    Color blueColour = new Color(0, 0, 1, 1);
-                    Color checkColour = go[i].GetComponent<Renderer>().material.color;
-                    if (checkColour == redColour) redTeamPaint++;
-                    if (checkColour == blueColour) blueTeamPaint++;
+                    Debug.Log("Red team has painted " + GameObject.Find("GameManager").GetComponent<GameManager>().redTeamPaintCount + " parts!");
+                    Debug.Log("Blue team has painted " + GameObject.Find("GameManager").GetComponent<GameManager>().blueTeamPaintCount + " parts!");
                 }
-
-                Debug.Log("Red team has painted " + redTeamPaint + " parts!");
-                Debug.Log("Blue team has painted " + blueTeamPaint + " parts!");
             }
         }
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class P_Paintball : Photon.MonoBehaviour {
+public class P_Paintball : MonoBehaviour {
 
     [Header("Attributes")]
     public Vector3 Position;
@@ -43,7 +43,7 @@ public class P_Paintball : Photon.MonoBehaviour {
         // collision with scene (things that can be painted in the level)
         if (other.gameObject.tag == "Scene")
         {
-            Debug.Log("Hit scene object" + other.name);
+            //Debug.Log("Hit scene object" + other.name);
             // paint them
             if (Team == "Red")
             {
@@ -52,7 +52,7 @@ public class P_Paintball : Photon.MonoBehaviour {
                 if (other.gameObject.GetComponent<Renderer>().material.color != new Color(1, 0, 0, 1))
                 {
                     other.gameObject.GetComponent<Renderer>().material.color = new Color(1, 0, 0, 1);
-                    //photonView.RPC("UpdateGameManagerPaint", PhotonTargets.All, 1);
+                    if (PhotonNetwork.isMasterClient) GameObject.Find("GameManager").GetComponent<GameManager>().redTeamPaintCount++;
                 }
             }
             else
@@ -61,23 +61,12 @@ public class P_Paintball : Photon.MonoBehaviour {
                 if (other.gameObject.GetComponent<Renderer>().material.color != new Color(0, 0, 1, 1))
                 {
                     other.gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 1, 1);
-                    //photonView.RPC("UpdateGameManagerPaint", PhotonTargets.All, 0);
+                    if (PhotonNetwork.isMasterClient) GameObject.Find("GameManager").GetComponent<GameManager>().blueTeamPaintCount++;
                 }
             }
             DestroyPaintball();
         }
     }
-
-    //[PunRPC]
-    //void UpdateGameManagerPaint(int rvalue)
-    //{
-    //    if (PhotonNetwork.isMasterClient)
-    //    {
-    //        GameManager GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-    //        if (rvalue == 1) GM.redTeamPaintCount++;
-    //        else GM.blueTeamPaintCount++;
-    //    }
-    //}
 
     void DestroyPaintball()
     {

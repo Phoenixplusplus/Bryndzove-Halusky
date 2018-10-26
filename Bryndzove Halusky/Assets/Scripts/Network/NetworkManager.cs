@@ -12,10 +12,6 @@ public class NetworkManager : Photon.MonoBehaviour {
     private UserInterfaceManager UI_Manager;
     public GameObject Character;
 
-    [Header("Teams")]
-    int redTeamCount = 0;
-    int blueTeamCount = 0;
-
     // Use this for initialization
     void Start()
     {
