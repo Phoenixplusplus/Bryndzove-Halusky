@@ -118,6 +118,28 @@ MonoBehaviour:
   Speed: 1
   Timeout: 0
   maxTimeout: 5
+  SplatDecal: {fileID: 1726831408888262, guid: 9a894286e0c04a540a4e0b23275e4e0e, type: 2}
+  SplatMaterials:
+  - {fileID: 2100000, guid: 014e81229322e644a84ca789bb65191b, type: 2}
+  - {fileID: 2100000, guid: c469fc1db1451f744a6ec3d92a7585ef, type: 2}
+  - {fileID: 2100000, guid: 142019cb21fea234d98a4da6661a25e1, type: 2}
+  - {fileID: 2100000, guid: e0f110086a51388418f753981c28e3a2, type: 2}
+  - {fileID: 2100000, guid: 95f5079c2f2f265418c55a2475db079d, type: 2}
+  - {fileID: 2100000, guid: 21c7e97be8097f0459a508e312dca523, type: 2}
+  - {fileID: 2100000, guid: 3a2d68796141f5c478acd85c047f83a2, type: 2}
+  - {fileID: 2100000, guid: a972be30e567a664da3a343a33c8e29c, type: 2}
+  - {fileID: 2100000, guid: 955c77de4e32a5e4591f1f1d5e5e0cca, type: 2}
+  - {fileID: 2100000, guid: d01347918f8365e41893cce2417b5a1f, type: 2}
+  - {fileID: 2100000, guid: 74097b13f1d42944fa1bfd13730498c8, type: 2}
+  - {fileID: 2100000, guid: 45fd045d9a7af56469c008e4417eb79d, type: 2}
+  - {fileID: 2100000, guid: a44dbdec8e6eefd42ab1579145a2b7b3, type: 2}
+  - {fileID: 2100000, guid: d8f0f2ae4f1029743a24080e9fa35630, type: 2}
+  - {fileID: 2100000, guid: 702e8a7f19cb83a40bd7d743d121ee47, type: 2}
+  - {fileID: 2100000, guid: 6ffb56898ee9a7545b5684ae154d8a3c, type: 2}
+  - {fileID: 2100000, guid: b7343526731c4b2428b3ec751ecac76f, type: 2}
+  - {fileID: 2100000, guid: 5e175b6986647db42b438224e6b552a4, type: 2}
+  - {fileID: 2100000, guid: 7078a13efdf4dc44eb0a9982a9dc4334, type: 2}
+  - {fileID: 2100000, guid: e07396c14be55f646893e63109c341fb, type: 2}
 --- !u!135 &135945300615241768
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -12,6 +12,10 @@ public class P_Paintball : MonoBehaviour {
     public float Timeout = 0f;
     public float maxTimeout = 4f;
 
+    [Header("Decal Attributes")]
+    public GameObject SplatDecal;
+    public Material[] SplatMaterials;
+
     // Use this for initialization
     void Start ()
     {
@@ -49,19 +53,37 @@ public class P_Paintball : MonoBehaviour {
             {
                 // if not already painted, paint it and send message to master to update gamemanager
                 // red
-                if (other.gameObject.GetComponent<Renderer>().material.color != new Color(1, 0, 0, 1))
+                GameObject splatDecal = Instantiate(SplatDecal, other.transform.position, other.transform.rotation);
+                splatDecal.transform.Rotate(Vector3.up, Random.Range(0, 360), Space.Self);
+                splatDecal.GetComponent<Decal>().m_Material = SplatMaterials[Random.Range(0, 10)];
+
+                if (other.GetComponent<ApplyPaint>().RedTeam == false)
                 {
-                    other.gameObject.GetComponent<Renderer>().material.color = new Color(1, 0, 0, 1);
-                    if (PhotonNetwork.isMasterClient) GameObject.Find("GameManager").GetComponent<GameManager>().redTeamPaintCount++;
+                    other.GetComponent<ApplyPaint>().RedTeam = true;
+                    GameObject.Find("GameManager").GetComponent<GameManager>().redTeamPaintCount++;
+                    if (other.GetComponent<ApplyPaint>().BlueTeam == true)
+                    {
+                        other.GetComponent<ApplyPaint>().BlueTeam = false;
+                        GameObject.Find("GameManager").GetComponent<GameManager>().blueTeamPaintCount--;
+                    }
                 }
             }
             else
             {
                 // blue
-                if (other.gameObject.GetComponent<Renderer>().material.color != new Color(0, 0, 1, 1))
+                GameObject splatDecal = Instantiate(SplatDecal, other.transform.position, other.transform.rotation);
+                splatDecal.transform.Rotate(Vector3.up, Random.Range(0, 360), Space.Self);
+                splatDecal.GetComponent<Decal>().m_Material = SplatMaterials[Random.Range(10, 20)];
+
+                if (other.GetComponent<ApplyPaint>().BlueTeam == false)
                 {
-                    other.gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 1, 1);
-                    if (PhotonNetwork.isMasterClient) GameObject.Find("GameManager").GetComponent<GameManager>().blueTeamPaintCount++;
+                    other.GetComponent<ApplyPaint>().BlueTeam = true;
+                    GameObject.Find("GameManager").GetComponent<GameManager>().blueTeamPaintCount++;
+                    if (other.GetComponent<ApplyPaint>().RedTeam == true)
+                    {
+                        other.GetComponent<ApplyPaint>().RedTeam = false;
+                        GameObject.Find("GameManager").GetComponent<GameManager>().redTeamPaintCount--;
+                    }
                 }
             }
             DestroyPaintball();
