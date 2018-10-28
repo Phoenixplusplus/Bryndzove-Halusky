@@ -21,10 +21,10 @@ public class UserInterfaceManager : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        if (m_networkManager.GetRoom(0) != null) test.gameObject.SetActive(true);
+        if (m_networkManager.GetRoomInfo(0) != null) test.gameObject.SetActive(true);
         else test.gameObject.SetActive(false);
 
-        if (m_networkManager.GetRoom(1) != null) test2.gameObject.SetActive(true);
+        if (m_networkManager.GetRoomInfo(1) != null) test2.gameObject.SetActive(true);
         else test2.gameObject.SetActive(false);
     }
 }

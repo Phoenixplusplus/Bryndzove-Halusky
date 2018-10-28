@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class C_Character : Photon.MonoBehaviour {
 
+    private GameManager gameManager;
+
     [Header("Network Attributes")]
     public string loginName;
     public string Team;
@@ -13,8 +15,6 @@ public class C_Character : Photon.MonoBehaviour {
     public float healthRecoverySpeed = 0.1f;
     public float movementSpeed;
     public Texture headTex, bodyTex;
-
-    public GameManager gameManager;
 
     // do not assign these values in editor
     public W_Weapon leftWeapon, rightWeapon;
@@ -27,8 +27,13 @@ public class C_Character : Photon.MonoBehaviour {
         // on spawn from network manager
         if (photonView.isMine)
         {
-            if (PhotonNetwork.isMasterClient == true) Debug.Log("I am master client");
-            Debug.Log("Press V to see how many parts a team has painted");
+            if (PhotonNetwork.isMasterClient == true)
+            {
+                Debug.Log("I am master client, setting reference to GameManager");
+                gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+                Debug.Log("Press V to see how many parts a team has painted");
+            }
+            else gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
             // pick a team based on players in server send as buffed so others that join know
             int rand = Random.Range(0, 3);
@@ -72,8 +77,8 @@ public class C_Character : Photon.MonoBehaviour {
                 // debug to check team paint count
                 if (PhotonNetwork.isMasterClient)
                 {
-                    Debug.Log("Red team has painted " + GameObject.Find("GameManager").GetComponent<GameManager>().redTeamPaintCount + " parts!");
-                    Debug.Log("Blue team has painted " + GameObject.Find("GameManager").GetComponent<GameManager>().blueTeamPaintCount + " parts!");
+                    Debug.Log("Red team has painted " + gameManager.redTeamPaintCount + " parts!");
+                    Debug.Log("Blue team has painted " + gameManager.blueTeamPaintCount + " parts!");
                 }
             }
         }

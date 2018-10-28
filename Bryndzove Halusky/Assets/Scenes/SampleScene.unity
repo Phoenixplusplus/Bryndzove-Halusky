@@ -317,6 +317,13 @@ MonoBehaviour:
   blueTeamCount: 0
   redTeamPaintCount: 0
   blueTeamPaintCount: 0
+  SplatDecal: {fileID: 1726831408888262, guid: 9a894286e0c04a540a4e0b23275e4e0e, type: 2}
+  defaultMaterial: {fileID: 2100000, guid: 74097b13f1d42944fa1bfd13730498c8, type: 2}
+  splatDecalsSize: 5
+  decalsStartPosition: {x: 0, y: -10, z: 0}
+  Paintball: {fileID: 1456266222574426, guid: ccc79cfab293de049af0f6a4a4f82dd1, type: 2}
+  paintballsSize: 5
+  paintballsStartPosition: {x: 0, y: -10, z: 0}
 --- !u!4 &107218005
 Transform:
   m_ObjectHideFlags: 0

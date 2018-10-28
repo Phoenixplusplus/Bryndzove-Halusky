@@ -133,11 +133,4 @@ public class NetworkManager : Photon.MonoBehaviour {
         localCharacter.GetComponentInChildren<C_BodyTilt>().enabled = true;
         localCharacter.GetComponentInChildren<C_CameraMovement>().enabled = true;
     }
-
-
-    public RoomInfo GetRoom(int roomNumber)
-    {
-        return roomsList[roomNumber];
-    }
-
 }

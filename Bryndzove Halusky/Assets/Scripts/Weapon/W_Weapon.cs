@@ -25,7 +25,7 @@ public class W_Weapon : Photon.MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        Character = transform.root.gameObject.GetComponent<C_Character>();
+
     }
 	
 	// Update is called once per frame

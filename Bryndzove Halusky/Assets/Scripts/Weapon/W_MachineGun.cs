@@ -40,24 +40,19 @@ public class W_MachineGun : W_Weapon {
     public override void CreatePaintball()
     {
         base.Muzzle = transform.Find("Muzzle");
-        base.CreatePaintball();
 
         // set paintball colour
         if (Character.Team == "Red") paintballColour = new Vector3(1, 0, 0);
         else paintballColour = new Vector3(0, 0, 1);
 
-        photonView.RPC("NetworkCreatePaintball", PhotonTargets.All, new object[] 
+        photonView.RPC("CreatePaintballRPC", PhotonTargets.All, new object[] 
         { Muzzle.transform.position, Muzzle.transform.rotation, paintballColour, shotSpeed, Character.Team});
     }
 
     [PunRPC]
-    public void NetworkCreatePaintball(Vector3 position, Quaternion rotation, Vector3 colour, float speed, string team)
+    public void CreatePaintballRPC(Vector3 position, Quaternion rotation, Vector3 colour, float speed, string team)
     {
-        GameObject pPaintball;
-        pPaintball = Instantiate(Paintball, position, rotation);
-        pPaintball.GetComponent<Renderer>().material.color = new Color(colour.x, colour.y, colour.z, 1);
-        pPaintball.GetComponent<P_Paintball>().Speed = speed;
-        pPaintball.GetComponent<P_Paintball>().Team = team;
+        GameObject.Find("GameManager").GetComponent<GameManager>().SetPaintball(position, rotation, colour, speed, team);
         if (!base.photonView.isMine)
         {
             Debug.Log("Other player fired");

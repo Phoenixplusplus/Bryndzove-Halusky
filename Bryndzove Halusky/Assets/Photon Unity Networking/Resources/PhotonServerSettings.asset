@@ -55,4 +55,6 @@ MonoBehaviour:
   - TriggerExit
   - DestroyPaintball
   - UpdateGameManagerPaint
+  - SetGameManagerReference
+  - CreatePaintballRPC
   DisableAutoOpenWizard: 1

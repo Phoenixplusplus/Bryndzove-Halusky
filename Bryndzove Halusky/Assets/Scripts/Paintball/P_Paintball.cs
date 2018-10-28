@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class P_Paintball : MonoBehaviour {
 
+    private GameManager gameManager;
+
     [Header("Attributes")]
     public Vector3 Position;
     public Quaternion Rotation;
@@ -11,6 +13,7 @@ public class P_Paintball : MonoBehaviour {
     public float Speed = 1f;
     public float Timeout = 0f;
     public float maxTimeout = 4f;
+    public bool isInit = true; // to keep paintballs where they are when manager spawns the pool of them
 
     [Header("Decal Attributes")]
     public GameObject SplatDecal;
@@ -19,16 +22,20 @@ public class P_Paintball : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-		
-	}
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        transform.position = transform.position + transform.forward * (Time.deltaTime * Speed);
+        // main paintball behaviour
+        if (!isInit)
+        {
+            transform.position = transform.position + transform.forward * (Time.deltaTime * Speed);
 
-        Timeout += Time.deltaTime;
-        if (Timeout > maxTimeout) DestroyPaintball();
+            Timeout += Time.deltaTime;
+            if (Timeout > maxTimeout) ResetPainball();
+        }
 	}
 
     void OnTriggerEnter(Collider other)
@@ -39,8 +46,8 @@ public class P_Paintball : MonoBehaviour {
             C_Character character = other.transform.root.GetComponent<C_Character>();
             if (character.Team != Team)
             {
-                other.transform.root.GetComponent<C_Character>().Health--;
-                DestroyPaintball();
+                character.Health--;
+                ResetPainball();
             }
         }
 
@@ -53,45 +60,41 @@ public class P_Paintball : MonoBehaviour {
             {
                 // if not already painted, paint it and send message to master to update gamemanager
                 // red
-                GameObject splatDecal = Instantiate(SplatDecal, other.transform.position, other.transform.rotation);
-                splatDecal.transform.Rotate(Vector3.up, Random.Range(0, 360), Space.Self);
-                splatDecal.GetComponent<Decal>().m_Material = SplatMaterials[Random.Range(0, 10)];
-
+                gameManager.SetSplatDecal(other.transform.position, other.transform.rotation, SplatMaterials[Random.Range(0, 10)]);
                 if (other.GetComponent<ApplyPaint>().RedTeam == false)
                 {
                     other.GetComponent<ApplyPaint>().RedTeam = true;
-                    GameObject.Find("GameManager").GetComponent<GameManager>().redTeamPaintCount++;
+                    gameManager.redTeamPaintCount++;
                     if (other.GetComponent<ApplyPaint>().BlueTeam == true)
                     {
                         other.GetComponent<ApplyPaint>().BlueTeam = false;
-                        GameObject.Find("GameManager").GetComponent<GameManager>().blueTeamPaintCount--;
+                        gameManager.blueTeamPaintCount--;
                     }
                 }
             }
             else
             {
                 // blue
-                GameObject splatDecal = Instantiate(SplatDecal, other.transform.position, other.transform.rotation);
-                splatDecal.transform.Rotate(Vector3.up, Random.Range(0, 360), Space.Self);
-                splatDecal.GetComponent<Decal>().m_Material = SplatMaterials[Random.Range(10, 20)];
-
+                gameManager.SetSplatDecal(other.transform.position, other.transform.rotation, SplatMaterials[Random.Range(10, 20)]);
                 if (other.GetComponent<ApplyPaint>().BlueTeam == false)
                 {
                     other.GetComponent<ApplyPaint>().BlueTeam = true;
-                    GameObject.Find("GameManager").GetComponent<GameManager>().blueTeamPaintCount++;
+                    gameManager.blueTeamPaintCount++;
                     if (other.GetComponent<ApplyPaint>().RedTeam == true)
                     {
                         other.GetComponent<ApplyPaint>().RedTeam = false;
-                        GameObject.Find("GameManager").GetComponent<GameManager>().redTeamPaintCount--;
+                        gameManager.redTeamPaintCount--;
                     }
                 }
             }
-            DestroyPaintball();
+            ResetPainball();
         }
     }
 
-    void DestroyPaintball()
+    void ResetPainball()
     {
-        Destroy(gameObject);
+        transform.position = gameManager.paintballsStartPosition;
+        Timeout = 0f;
+        isInit = true;
     }
 }
