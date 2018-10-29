@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class NetworkManager : Photon.MonoBehaviour {
 
-    private string roomName = "I'm hungry";
-    private TypedLobby lobbyName = new TypedLobby("NewLobby", LobbyType.Default);
-    private RoomInfo[] roomsList;
-    private GameManager GM;
+    protected string roomName = "I'm hungry";
+    protected TypedLobby lobbyName = new TypedLobby("NewLobby", LobbyType.Default);
+    protected RoomInfo[] roomsList;
+    protected GameManager GM;
     private GameObject lobbyCamera;
-    private UserInterfaceManager UI_Manager;
     public GameObject Character;
 
     // Use this for initialization
@@ -17,50 +16,20 @@ public class NetworkManager : Photon.MonoBehaviour {
     {
         PhotonNetwork.ConnectUsingSettings("v4.2");
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-        UI_Manager = GameObject.Find("UserInterfaceManager").GetComponent<UserInterfaceManager>();
         lobbyCamera = GameObject.Find("LobbyCamera");
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        roomsList = PhotonNetwork.GetRoomList();
+        Debug.Log("Room list length " + roomsList.Length);
     }
 
-    void OnGUI()
-    {
-        if (!PhotonNetwork.connected)
-        {
-            GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
-        }
-        else if (PhotonNetwork.room == null)
-        {
-          // create room
-          //  if (GUI.Button(new Rect(100, 100, 250, 100), "Create Server"))
-          //  {
-          //      roomName = "Server " + roomsList.Length + 1;
-          //      PhotonNetwork.CreateRoom(roomName, new RoomOptions() { MaxPlayers = 4, IsOpen = true, IsVisible = true }, lobbyName);
-          //  }
-
-            // join room
-            /*
-            if (roomsList != null)
-            {
-                for (int i = 0; i < roomsList.Length; i++)
-                {
-                    if (GUI.Button(new Rect(100, 250 + (110 * i), 250, 100), roomsList[i].Name + " - Players (" + roomsList[i].PlayerCount + "/" + roomsList[i].MaxPlayers + ")"))
-                    {
-                        PhotonNetwork.JoinRoom(roomsList[i].Name);
-                    }
-                }
-            }
-            */
-        }
-    }
 
     public void CreateNewRoom()
     {
-        roomName = "Server " + roomsList.Length + 1;
+        roomName = "Server " + roomsList.Length + 1 ;
         PhotonNetwork.CreateRoom(roomName, new RoomOptions() { MaxPlayers = 4, IsOpen = true, IsVisible = true }, lobbyName);
     }
 
@@ -68,17 +37,6 @@ public class NetworkManager : Photon.MonoBehaviour {
     {
         PhotonNetwork.JoinRoom(roomsList[roomNumber].Name);
     }
-
-    public RoomInfo GetRoomInfo(int roomNumber)
-    {
-        return roomsList[roomNumber];
-    }
-
-    public RoomInfo [] GetRoomList()
-    {
-        return roomsList;
-    }
-
 
     void OnConnectedToMaster()
     {
