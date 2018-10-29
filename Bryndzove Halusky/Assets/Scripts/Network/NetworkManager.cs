@@ -47,6 +47,11 @@ public class NetworkManager : Photon.MonoBehaviour {
         Debug.Log("Room list length " + roomsList.Length);
     }
 
+    public TypedLobby GetLobbyName()
+    {
+        return lobbyName;
+    }
+
     void OnJoinedLobby()
     {
         Debug.Log("Joined lobby");

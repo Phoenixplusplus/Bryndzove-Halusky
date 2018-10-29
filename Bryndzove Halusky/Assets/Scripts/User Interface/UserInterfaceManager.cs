@@ -4,19 +4,12 @@ using UnityEngine.UI;
 public class UserInterfaceManager : NetworkManager
 {
     private UI_RoomButton [] m_roomButtonsArray;
-
-    public Button test;
-    public Button test2;
+    private int m_countOfRoomButtons;
 
     // Use this for initialization
     void Start ()
     {
-        m_roomButtonsArray = FindObjectsOfType(typeof(UI_RoomButton)) as UI_RoomButton[];
-
-        foreach (UI_RoomButton ptrButton in m_roomButtonsArray)
-        {
-            ptrButton.gameObject.SetActive(false);
-        }
+        InitializeRoomButtons();
     }
 
     // Update is called once per frame
@@ -35,9 +28,37 @@ public class UserInterfaceManager : NetworkManager
         }
     }
 
+    // Return the count of players connected in master server and rooms together
     public int GetPlayersInMasterServer()
     {
         return PhotonNetwork.countOfPlayersOnMaster + PhotonNetwork.countOfPlayersInRooms;
+    }
+
+    // Initialize all room buttons
+    private void InitializeRoomButtons()
+    {
+        // Get all button which containt UI_RoomButton script and put them into array
+        m_roomButtonsArray = FindObjectsOfType(typeof(UI_RoomButton)) as UI_RoomButton[];
+        m_countOfRoomButtons = m_roomButtonsArray.Length;
+
+        // Swap the buttons positions in array
+        // Create temporary UI_RoomButton object
+        UI_RoomButton a;
+        for (int i = 0; i < m_countOfRoomButtons; i++)
+        {
+            for (int k = 0; k < m_countOfRoomButtons - 1; k++)
+            {
+                if (m_roomButtonsArray[k].ID > m_roomButtonsArray[k + 1].ID)
+                {
+                    a = m_roomButtonsArray[k];
+                    m_roomButtonsArray[k] = m_roomButtonsArray[k + 1];
+                    m_roomButtonsArray[k + 1] = a;
+                }
+            }
+        }
+
+        // Disable all buttons
+        for (int i = 0; i < m_countOfRoomButtons; i++) m_roomButtonsArray[i].gameObject.SetActive(false);
     }
 }
 
