@@ -15,7 +15,6 @@ public class UI_CreateGame : MonoBehaviour
     private Color32 m_colorSelected = new Color32(155, 232, 255, 255);
     private Color32 m_colorNotSelected = new Color32(255, 255, 255, 255);
 
-
     void Start()
     {
         //Text sets your text to say this message
@@ -32,11 +31,6 @@ public class UI_CreateGame : MonoBehaviour
         BTN_IMG_2vs2 = this.gameObject.transform.GetChild(4).GetComponent<Image>();
         BTN_IMG_3vs3 = this.gameObject.transform.GetChild(5).GetComponent<Image>();
         BTN_IMG_4vs4 = this.gameObject.transform.GetChild(6).GetComponent<Image>();
-    }
-
-    void Update()
-    {
-        Debug.Log("KOKOTINA " + m_roomName.text);
     }
 
     public void CreateNewRoom()

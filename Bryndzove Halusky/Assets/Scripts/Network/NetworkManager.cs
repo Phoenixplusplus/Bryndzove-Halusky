@@ -8,6 +8,7 @@ public class NetworkManager : Photon.MonoBehaviour {
     protected TypedLobby lobbyName = new TypedLobby("NewLobby", LobbyType.Default);
     protected RoomInfo[] roomsList;
     protected GameManager GM;
+    protected UserInterfaceManager UI_Manager;
     protected int playersOnline;
     private GameObject lobbyCamera;
     public GameObject Character;
@@ -23,17 +24,24 @@ public class NetworkManager : Photon.MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-    }
-
-    public void CreateNewRoom()
-    {
-        roomName = "Server " + roomsList.Length + 1 ;
-        PhotonNetwork.CreateRoom(roomName, new RoomOptions() { MaxPlayers = 4, IsOpen = true, IsVisible = true }, lobbyName);
+        // Update the lists while is inside the lobby or move it into refresh button function or even delete ???????????
+        // Update the lists while is inside the lobby or move it into refresh button function or even delete ???????????
+        // Update the lists while is inside the lobby or move it into refresh button function or even delete ???????????
+        // Update the lists while is inside the lobby or move it into refresh button function or even delete ???????????
+        //OnReceivedRoomListUpdate();
     }
 
     public void JoinRoom(int roomNumber)
     {
-        PhotonNetwork.JoinRoom(roomsList[roomNumber].Name);
+      //  if (roomsList[roomNumber].PlayerCount < roomsList[roomNumber].MaxPlayers)
+      //  {
+      //      Debug.Log("PlayerCount " + roomsList[roomNumber].PlayerCount);
+       //     PhotonNetwork.JoinRoom(roomsList[roomNumber].Name);
+      //  }
+      //  else // Show UI the room is full
+       // {
+
+      //  }
     }
 
     void OnConnectedToMaster()
@@ -41,7 +49,7 @@ public class NetworkManager : Photon.MonoBehaviour {
         PhotonNetwork.JoinLobby(lobbyName);
     }
 
-    public void OnReceivedRoomListUpdate()
+    void OnReceivedRoomListUpdate()
     {
         roomsList = PhotonNetwork.GetRoomList();
         Debug.Log("Room list length " + roomsList.Length);

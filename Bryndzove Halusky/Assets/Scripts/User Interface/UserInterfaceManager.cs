@@ -5,11 +5,13 @@ public class UserInterfaceManager : NetworkManager
 {
     private UI_RoomButton [] m_roomButtonsArray;
     private int m_countOfRoomButtons;
+    protected Canvas CNVS_Lobby;
 
     // Use this for initialization
     void Start ()
     {
         InitializeRoomButtons();
+        CNVS_Lobby = GameObject.Find("CNV_MainMenu").GetComponent<Canvas>(); ;
     }
 
     // Update is called once per frame
@@ -17,12 +19,19 @@ public class UserInterfaceManager : NetworkManager
     {
         if (PhotonNetwork.connected)
         {
+            // DELETEEEEEEEEEEEEEEEEEee
+            // DELETEEEEEEEEEEEEEEEEEee
+            // DELETEEEEEEEEEEEEEEEEEee
+
+
             if (roomsList != null)
             {
+                UpdateRooms();
+
+
                 for (int i = 0; i < roomsList.Length; i++)
                 {
                     if (roomsList[i] != null) m_roomButtonsArray[i].gameObject.SetActive(true);
-                    else m_roomButtonsArray[i].gameObject.SetActive(false);
                 }
             }
         }
@@ -32,6 +41,35 @@ public class UserInterfaceManager : NetworkManager
     public int GetPlayersInMasterServer()
     {
         return PhotonNetwork.countOfPlayersOnMaster + PhotonNetwork.countOfPlayersInRooms;
+    }
+
+    public void UpdateRooms()
+    {
+        for (int i = 0; i < roomsList.Length; i++)
+        {
+            m_roomButtonsArray[i].SetRoomDetails(i, "Status", roomsList[i].Name, "Map", roomsList[i].PlayerCount, roomsList[i].MaxPlayers);
+        }
+
+        if (roomsList.Length < m_countOfRoomButtons)
+        {
+            for (int i = roomsList.Length; i < m_countOfRoomButtons; i++)
+            {
+                m_roomButtonsArray[i].ResetButton();
+            }
+        }
+    }
+
+    void JoinRoom(int roomNumber)
+    {
+        if (roomsList[roomNumber].PlayerCount < roomsList[roomNumber].MaxPlayers)
+        {
+            CNVS_Lobby.gameObject.SetActive(false);
+            PhotonNetwork.JoinRoom(roomsList[roomNumber].Name);
+        }
+        else // Show UI the room is full
+        {
+            Debug.Log("Rooms " + roomsList[roomNumber].Name + " is full.");
+        }
     }
 
     // Initialize all room buttons
@@ -58,7 +96,11 @@ public class UserInterfaceManager : NetworkManager
         }
 
         // Disable all buttons
-        for (int i = 0; i < m_countOfRoomButtons; i++) m_roomButtonsArray[i].gameObject.SetActive(false);
+        for (int i = 0; i < m_countOfRoomButtons; i++)
+        {
+            // m_roomButtonsArray[i].gameObject.SetActive(false);
+            m_roomButtonsArray[i].ResetButton();
+        }
     }
 }
 
