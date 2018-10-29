@@ -34,6 +34,11 @@ public class UserInterfaceManager : NetworkManager
             }
         }
     }
+
+    public int GetPlayersInMasterServer()
+    {
+        return PhotonNetwork.countOfPlayersOnMaster + PhotonNetwork.countOfPlayersInRooms;
+    }
 }
 
 // roomsList lengthe does not update during the gameplay ? when you run 2 clients in same time without created any game yet,
