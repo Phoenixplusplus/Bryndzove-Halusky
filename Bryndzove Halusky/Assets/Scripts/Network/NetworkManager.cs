@@ -8,6 +8,7 @@ public class NetworkManager : Photon.MonoBehaviour {
     protected TypedLobby lobbyName = new TypedLobby("NewLobby", LobbyType.Default);
     protected RoomInfo[] roomsList;
     protected GameManager GM;
+    protected int playersOnline;
     private GameObject lobbyCamera;
     public GameObject Character;
 
@@ -22,10 +23,7 @@ public class NetworkManager : Photon.MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        roomsList = PhotonNetwork.GetRoomList();
-        Debug.Log("Room list length " + roomsList.Length);
     }
-
 
     public void CreateNewRoom()
     {
@@ -43,9 +41,10 @@ public class NetworkManager : Photon.MonoBehaviour {
         PhotonNetwork.JoinLobby(lobbyName);
     }
 
-    void OnReceivedRoomListUpdate()
+    public void OnReceivedRoomListUpdate()
     {
         roomsList = PhotonNetwork.GetRoomList();
+        Debug.Log("Room list length " + roomsList.Length);
     }
 
     void OnJoinedLobby()
