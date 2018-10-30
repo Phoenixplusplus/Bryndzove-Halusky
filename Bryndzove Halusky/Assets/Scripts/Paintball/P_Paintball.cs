@@ -18,6 +18,9 @@ public class P_Paintball : MonoBehaviour {
     [Header("Decal Attributes")]
     public GameObject SplatDecal;
     public Material[] SplatMaterials;
+    private Vector3 surfaceNormal;
+    private Vector3 surfacePosition;
+    public LayerMask layerMask;
 
     // Use this for initialization
     void Start ()
@@ -40,7 +43,7 @@ public class P_Paintball : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        // collision with player, this can be handled locally for each player
+        // collision with player
         if (other.gameObject.tag == "Player")
         {
             C_Character character = other.transform.root.GetComponent<C_Character>();
@@ -57,9 +60,8 @@ public class P_Paintball : MonoBehaviour {
             // paint them
             if (Team == "Red")
             {
-                // if not already painted, paint it and send message to master to update gamemanager
                 // red
-                gameManager.SetSplatDecal(transform.position, transform.eulerAngles - new Vector3(90, 0, 0), SplatMaterials[Random.Range(0, 10)]);
+                gameManager.SetSplatDecal(surfacePosition, Quaternion.LookRotation(surfaceNormal), SplatMaterials[Random.Range(0, 10)]);
                 if (other.GetComponent<ApplyPaint>().RedTeam == false)
                 {
                     other.GetComponent<ApplyPaint>().RedTeam = true;
@@ -74,7 +76,7 @@ public class P_Paintball : MonoBehaviour {
             else
             {
                 // blue
-                gameManager.SetSplatDecal(transform.position, transform.eulerAngles - new Vector3(90, 0, 0), SplatMaterials[Random.Range(10, 20)]);
+                gameManager.SetSplatDecal(surfacePosition, Quaternion.LookRotation(surfaceNormal), SplatMaterials[Random.Range(10, 20)]);
                 if (other.GetComponent<ApplyPaint>().BlueTeam == false)
                 {
                     other.GetComponent<ApplyPaint>().BlueTeam = true;
@@ -87,6 +89,19 @@ public class P_Paintball : MonoBehaviour {
                 }
             }
             ResetPainball();
+        }
+    }
+
+    // ray must be cast to determine the position and rotation of the splat (only done once on initial fire), it helps that the paintball does not change direction and keeps going forward
+    // this method was used because triggers cannot get normals of face that was collided with - normal collisions with rigidbody and colliders can, however the normal of the object and collision
+    // is unrealiable, so raycast was used (ignoring the paintballs themselves in case the player fired in the exact same spot constantly
+    public void PaintballRaycast()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 5000f, layerMask))
+        {
+            surfaceNormal = hit.normal;
+            surfacePosition = hit.point;
         }
     }
 

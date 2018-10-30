@@ -704,7 +704,6 @@ MonoBehaviour:
   movementSpeed: 0
   headTex: {fileID: 0}
   bodyTex: {fileID: 0}
-  gameManager: {fileID: 0}
   leftWeapon: {fileID: 0}
   rightWeapon: {fileID: 0}
 --- !u!114 &114541417041061170

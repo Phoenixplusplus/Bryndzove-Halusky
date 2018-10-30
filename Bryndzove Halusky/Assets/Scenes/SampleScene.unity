@@ -1336,10 +1336,10 @@ MonoBehaviour:
   blueTeamPaintCount: 0
   SplatDecal: {fileID: 1726831408888262, guid: 9a894286e0c04a540a4e0b23275e4e0e, type: 2}
   defaultMaterial: {fileID: 2100000, guid: 74097b13f1d42944fa1bfd13730498c8, type: 2}
-  splatDecalsSize: 5
+  splatDecalsSize: 150
   decalsStartPosition: {x: 0, y: -10, z: 0}
   Paintball: {fileID: 1456266222574426, guid: ccc79cfab293de049af0f6a4a4f82dd1, type: 2}
-  paintballsSize: 5
+  paintballsSize: 50
   paintballsStartPosition: {x: 0, y: -10, z: 0}
 --- !u!4 &107218005
 Transform:
@@ -2791,7 +2791,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000018516004, y: 80.65724}
+  m_AnchoredPosition: {x: -0.0000138913265, y: 79.606064}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &291954699
@@ -13455,7 +13455,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 226978936}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.72520256
+  m_Size: 0.73464656
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

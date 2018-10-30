@@ -63,13 +63,14 @@ public class GameManager : MonoBehaviour {
     // called by any weapon that fires, grab one from the pool and just position it where needed
     public void SetPaintball(Vector3 position, Quaternion rotation, Vector3 colour, float speed, string team)
     {
-        P_Paintball pp = Paintballs[currentPaintball].GetComponent<P_Paintball>();
         Paintballs[currentPaintball].transform.position = position;
         Paintballs[currentPaintball].transform.rotation = rotation;
         Paintballs[currentPaintball].GetComponent<Renderer>().material.color = new Color(colour.x, colour.y, colour.z, 1);
+        P_Paintball pp = Paintballs[currentPaintball].GetComponent<P_Paintball>();
         pp.Speed = speed;
         pp.Team = team;
         pp.isInit = false;
+        pp.PaintballRaycast();
 
         // increment through list and check
         currentPaintball++;
@@ -77,10 +78,13 @@ public class GameManager : MonoBehaviour {
     }
 
     // called by paintball on collision
-    public void SetSplatDecal(Vector3 position, Vector3 rotation, Material material)
+    public void SetSplatDecal(Vector3 position, Quaternion rotation, Material material)
     {
         SplatDecals[currentDecal].transform.position = position;
-        SplatDecals[currentDecal].transform.eulerAngles = rotation;
+        SplatDecals[currentDecal].transform.rotation = rotation;
+        // the splats rotation is of the normal of the surface hit, because decals are projected down from the Y axis, rotate x by 90 so we can see it
+        // then give a random local Y rotation so not all splats look the same
+        SplatDecals[currentDecal].transform.Rotate(Vector3.right, 90, Space.Self);
         SplatDecals[currentDecal].transform.Rotate(Vector3.up, Random.Range(0, 360), Space.Self);
         SplatDecals[currentDecal].GetComponent<Decal>().m_Material = material;
 
