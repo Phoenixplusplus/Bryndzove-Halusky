@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114088255694649794}
   - component: {fileID: 54850970070298052}
   - component: {fileID: 114773381146365188}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character
   m_TagString: Character
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 23248424399548262}
   - component: {fileID: 136453104620414634}
   - component: {fileID: 114057227334062512}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CharacterLArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 23466519256849142}
   - component: {fileID: 136166818335993076}
   - component: {fileID: 114240856650349210}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CharacterRArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 23916933381953352}
   - component: {fileID: 136643452895659898}
   - component: {fileID: 114071657329961862}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CharacterBody
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 20435718606711948}
   - component: {fileID: 81854943717244848}
   - component: {fileID: 114875242521005272}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CharacterCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 23189470376754064}
   - component: {fileID: 136845755143740576}
   - component: {fileID: 114022404358497458}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CharacterHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4386584105006338}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RGunSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4043863425804584}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LGunSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
