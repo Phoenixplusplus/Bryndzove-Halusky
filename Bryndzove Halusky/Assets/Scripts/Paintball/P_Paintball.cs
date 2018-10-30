@@ -54,13 +54,12 @@ public class P_Paintball : MonoBehaviour {
         // collision with scene (things that can be painted in the level)
         if (other.gameObject.tag == "Scene")
         {
-            //Debug.Log("Hit scene object" + other.name);
             // paint them
             if (Team == "Red")
             {
                 // if not already painted, paint it and send message to master to update gamemanager
                 // red
-                gameManager.SetSplatDecal(other.transform.position, other.transform.rotation, SplatMaterials[Random.Range(0, 10)]);
+                gameManager.SetSplatDecal(transform.position, transform.eulerAngles - new Vector3(90, 0, 0), SplatMaterials[Random.Range(0, 10)]);
                 if (other.GetComponent<ApplyPaint>().RedTeam == false)
                 {
                     other.GetComponent<ApplyPaint>().RedTeam = true;
@@ -75,7 +74,7 @@ public class P_Paintball : MonoBehaviour {
             else
             {
                 // blue
-                gameManager.SetSplatDecal(other.transform.position, other.transform.rotation, SplatMaterials[Random.Range(10, 20)]);
+                gameManager.SetSplatDecal(transform.position, transform.eulerAngles - new Vector3(90, 0, 0), SplatMaterials[Random.Range(10, 20)]);
                 if (other.GetComponent<ApplyPaint>().BlueTeam == false)
                 {
                     other.GetComponent<ApplyPaint>().BlueTeam = true;

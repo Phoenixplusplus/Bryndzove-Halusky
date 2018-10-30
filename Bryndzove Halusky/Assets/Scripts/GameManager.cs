@@ -77,10 +77,10 @@ public class GameManager : MonoBehaviour {
     }
 
     // called by paintball on collision
-    public void SetSplatDecal(Vector3 position, Quaternion rotation, Material material)
+    public void SetSplatDecal(Vector3 position, Vector3 rotation, Material material)
     {
         SplatDecals[currentDecal].transform.position = position;
-        SplatDecals[currentDecal].transform.rotation = rotation;
+        SplatDecals[currentDecal].transform.eulerAngles = rotation;
         SplatDecals[currentDecal].transform.Rotate(Vector3.up, Random.Range(0, 360), Space.Self);
         SplatDecals[currentDecal].GetComponent<Decal>().m_Material = material;
 
