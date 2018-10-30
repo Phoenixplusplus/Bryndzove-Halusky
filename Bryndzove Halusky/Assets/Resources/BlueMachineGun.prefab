@@ -274,7 +274,7 @@ MonoBehaviour:
   clipSize: 30
   ammoCount: 30
   reloadDelay: 1.5
-  shotDelay: 0.2
+  shotDelay: 0.05
   shotSound: {fileID: 0}
   shotSpeed: 30
   Muzzle: {fileID: 0}

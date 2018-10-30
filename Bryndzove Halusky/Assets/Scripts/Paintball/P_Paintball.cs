@@ -18,9 +18,16 @@ public class P_Paintball : MonoBehaviour {
     [Header("Decal Attributes")]
     public GameObject SplatDecal;
     public Material[] SplatMaterials;
-    private Vector3 surfaceNormal;
-    private Vector3 surfacePosition;
+
+    [Header("Ray Attributes")]
+    private Vector3 hitNormal;
+    private Vector3 hitPosition;
     public LayerMask layerMask;
+    public float rayLength = 1000f;
+    private GameObject hitObject;
+    // ray debugging
+    private Vector3 startPosition;
+    private Vector3 startForwardPosition;
 
     // Use this for initialization
     void Start ()
@@ -38,6 +45,44 @@ public class P_Paintball : MonoBehaviour {
 
             Timeout += Time.deltaTime;
             if (Timeout > maxTimeout) ResetPainball();
+
+            // splat condition
+            // when the gun fires - it tells the game manager to get the pooled game object and set it's position, then cast a ray, to see where it will hit
+            // with this, we can store that position and just tell the paintball to splat when we get close enough (by again getting the game manager to position a splay decal from pool)
+            if (Vector3.Distance(transform.position, hitPosition) <= 1)
+            {
+                if (Team == "Red")
+                {
+                    // red
+                    gameManager.SetSplatDecal(hitPosition, Quaternion.LookRotation(hitNormal), SplatMaterials[Random.Range(0, 10)]);
+                    if (hitObject.GetComponent<ApplyPaint>().RedTeam == false)
+                    {
+                        hitObject.GetComponent<ApplyPaint>().RedTeam = true;
+                        gameManager.redTeamPaintCount++;
+                        if (hitObject.GetComponent<ApplyPaint>().BlueTeam == true)
+                        {
+                            hitObject.GetComponent<ApplyPaint>().BlueTeam = false;
+                            gameManager.blueTeamPaintCount--;
+                        }
+                    }
+                }
+                else
+                {
+                    // blue
+                    gameManager.SetSplatDecal(hitPosition, Quaternion.LookRotation(hitNormal), SplatMaterials[Random.Range(10, 20)]);
+                    if (hitObject.GetComponent<ApplyPaint>().BlueTeam == false)
+                    {
+                        hitObject.GetComponent<ApplyPaint>().BlueTeam = true;
+                        gameManager.blueTeamPaintCount++;
+                        if (hitObject.GetComponent<ApplyPaint>().RedTeam == true)
+                        {
+                            hitObject.GetComponent<ApplyPaint>().RedTeam = false;
+                            gameManager.redTeamPaintCount--;
+                        }
+                    }
+                }
+                ResetPainball();
+            }
         }
 	}
 
@@ -53,55 +98,24 @@ public class P_Paintball : MonoBehaviour {
                 ResetPainball();
             }
         }
-
-        // collision with scene (things that can be painted in the level)
-        if (other.gameObject.tag == "Scene")
-        {
-            // paint them
-            if (Team == "Red")
-            {
-                // red
-                gameManager.SetSplatDecal(surfacePosition, Quaternion.LookRotation(surfaceNormal), SplatMaterials[Random.Range(0, 10)]);
-                if (other.GetComponent<ApplyPaint>().RedTeam == false)
-                {
-                    other.GetComponent<ApplyPaint>().RedTeam = true;
-                    gameManager.redTeamPaintCount++;
-                    if (other.GetComponent<ApplyPaint>().BlueTeam == true)
-                    {
-                        other.GetComponent<ApplyPaint>().BlueTeam = false;
-                        gameManager.blueTeamPaintCount--;
-                    }
-                }
-            }
-            else
-            {
-                // blue
-                gameManager.SetSplatDecal(surfacePosition, Quaternion.LookRotation(surfaceNormal), SplatMaterials[Random.Range(10, 20)]);
-                if (other.GetComponent<ApplyPaint>().BlueTeam == false)
-                {
-                    other.GetComponent<ApplyPaint>().BlueTeam = true;
-                    gameManager.blueTeamPaintCount++;
-                    if (other.GetComponent<ApplyPaint>().RedTeam == true)
-                    {
-                        other.GetComponent<ApplyPaint>().RedTeam = false;
-                        gameManager.redTeamPaintCount--;
-                    }
-                }
-            }
-            ResetPainball();
-        }
     }
 
     // ray must be cast to determine the position and rotation of the splat (only done once on initial fire), it helps that the paintball does not change direction and keeps going forward
     // this method was used because triggers cannot get normals of face that was collided with - normal collisions with rigidbody and colliders can, however the normal of the object and collision
-    // is unrealiable, so raycast was used (ignoring the paintballs themselves in case the player fired in the exact same spot constantly
+    // is unrealiable, so raycast was used (ignoring the paintballs themselves in case the player fired in the exact same spot constantly, and ignoring some scene objects through 'layers')
     public void PaintballRaycast()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 5000f, layerMask))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, rayLength, layerMask))
         {
-            surfaceNormal = hit.normal;
-            surfacePosition = hit.point;
+            hitNormal = hit.normal;
+            hitPosition = hit.point;
+            hitObject = hit.transform.gameObject;
+
+            if (hitObject.GetComponent<ApplyPaint>() == null) Debug.Log(hitObject.name + "has no ApplyPaint script.. somehow");
+
+            startPosition = transform.position;
+            startForwardPosition = transform.forward;
         }
     }
 

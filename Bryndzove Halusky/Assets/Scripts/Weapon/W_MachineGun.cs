@@ -8,7 +8,7 @@ public class W_MachineGun : W_Weapon {
     {
         clipSize = 30;
         ammoCount = 30;
-        shotDelay = 0.2f;
+        shotDelay = 0.05f;
         reloadDelay = 1.5f;
         shotSpeed = 30f;
     }

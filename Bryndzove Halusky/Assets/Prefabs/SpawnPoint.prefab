@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 65355694175787572}
   - component: {fileID: 114875621929894646}
   - component: {fileID: 114855329593733468}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpawnPoint
   m_TagString: SpawnPoint
   m_Icon: {fileID: 0}
@@ -101,3 +101,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Team: 
   Occupied: 0
+  health: 10
