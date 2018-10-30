@@ -103,7 +103,3 @@ public class UserInterfaceManager : NetworkManager
         }
     }
 }
-
-// roomsList lengthe does not update during the gameplay ? when you run 2 clients in same time without created any game yet,
-// and after you connect twice into game and create game, both games will be made in roomList[0], or only first one will be,
-// second game wont initialize

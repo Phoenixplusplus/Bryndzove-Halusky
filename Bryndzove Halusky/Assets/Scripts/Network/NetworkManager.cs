@@ -29,7 +29,22 @@ public class NetworkManager : Photon.MonoBehaviour {
         // Update the lists while is inside the lobby or move it into refresh button function or even delete ???????????
         // Update the lists while is inside the lobby or move it into refresh button function or even delete ???????????
         //OnReceivedRoomListUpdate();
+
+        if (PhotonNetwork.inRoom)
+        {
+            Debug.Log("Inside the room ");
+
+        }
+        else if (PhotonNetwork.insideLobby)
+        {
+            Debug.Log("Inside the lobby ");
+        }
+        else if (!PhotonNetwork.connected)
+        {
+            Debug.Log("Not Connected ");
+        }
     }
+   // public virtual void OnInsideLo
 
     public void JoinRoom(int roomNumber)
     {
