@@ -6,35 +6,51 @@ public class UserInterfaceManager : NetworkManager
     private UI_RoomButton [] m_roomButtonsArray;
     private int m_countOfRoomButtons;
     protected Canvas CNVS_Lobby;
+    private Text m_TXT_ConnectingToServer;
 
     // Use this for initialization
     void Start ()
     {
         InitializeRoomButtons();
         CNVS_Lobby = GameObject.Find("CNV_MainMenu").GetComponent<Canvas>(); ;
+        m_TXT_ConnectingToServer = CNVS_Lobby.GetComponentInChildren<Text>();
+        CNVS_Lobby.transform.GetChild(2).transform.GetChild(4).gameObject.SetActive(false);
+        CNVS_Lobby.transform.GetChild(2).gameObject.SetActive(false);
+        UI_Manager = this;
     }
 
+    public Canvas GetMainMenuCanvas() { return CNVS_Lobby; }
+
     // Update is called once per frame
-    void Update ()
+    public override void OnInsideLobby()
     {
-        if (PhotonNetwork.connected)
+        if (m_TXT_ConnectingToServer.gameObject.activeSelf)
         {
-            // DELETEEEEEEEEEEEEEEEEEee
-            // DELETEEEEEEEEEEEEEEEEEee
-            // DELETEEEEEEEEEEEEEEEEEee
+            m_TXT_ConnectingToServer.gameObject.SetActive(false);
+            CNVS_Lobby.transform.GetChild(2).gameObject.SetActive(true);
+        }
 
+        if (roomsList != null)
+        {
+            // Update rooms button information
+            UpdateRooms();
 
-            if (roomsList != null)
+            // Enable new button if is created
+            for (int i = 0; i < roomsList.Length; i++)
             {
-                UpdateRooms();
-
-
-                for (int i = 0; i < roomsList.Length; i++)
-                {
-                    if (roomsList[i] != null) m_roomButtonsArray[i].gameObject.SetActive(true);
-                }
+              if (roomsList[i] != null) m_roomButtonsArray[i].gameObject.SetActive(true);
             }
         }
+    }
+
+    public override void OnConnecting()
+    {
+        if (!m_TXT_ConnectingToServer.gameObject.activeSelf)
+        {
+            m_TXT_ConnectingToServer.gameObject.SetActive(true);
+            CNVS_Lobby.transform.GetChild(2).gameObject.SetActive(false);
+        }
+
     }
 
     // Return the count of players connected in master server and rooms together
