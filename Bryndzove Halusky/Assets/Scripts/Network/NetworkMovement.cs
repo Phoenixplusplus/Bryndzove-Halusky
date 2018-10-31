@@ -57,7 +57,7 @@ public class NetworkMovement : NetworkManager
             stream.SendNext(transform.rotation);
             stream.SendNext(characterMovement.localVelocity);
             stream.SendNext(characterMovement.movementSpeed);
-            if (PhotonNetwork.isMasterClient && !IsGameStarting) { stream.SendNext(IsGameStarting); IsGameStarting = false; }
+            if (PhotonNetwork.isMasterClient && IsGameStarting) { stream.SendNext(IsGameStarting); IsGameStarting = false; }
         }
         else
         {

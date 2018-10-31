@@ -79,7 +79,7 @@ public class UserInterfaceManager : NetworkManager
     {
         if (roomsList[roomNumber].PlayerCount < roomsList[roomNumber].MaxPlayers)
         {
-            CNVS_Lobby.gameObject.SetActive(false);
+            //CNVS_Lobby.gameObject.SetActive(false);
             PhotonNetwork.JoinRoom(roomsList[roomNumber].Name);
         }
         else // Show UI the room is full
