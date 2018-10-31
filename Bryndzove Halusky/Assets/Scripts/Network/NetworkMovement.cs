@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkMovement : Photon.MonoBehaviour {
-
-    private GameObject Character;
+public class NetworkMovement : NetworkManager
+{
+    private GameObject pCharacter;
     private C_CharacterMovement characterMovement;
     private Vector3 networkPosition, networkVelocity, predictedPosition;
     private Quaternion networkRotation;
@@ -20,8 +20,8 @@ public class NetworkMovement : Photon.MonoBehaviour {
         PhotonNetwork.sendRateOnSerialize = serializedSendRate;
 
         // grab a reference to the root class (returns self if class == root)
-        Character = transform.root.gameObject;
-        characterMovement = Character.GetComponent<C_CharacterMovement>();
+        pCharacter = transform.root.gameObject;
+        characterMovement = pCharacter.GetComponent<C_CharacterMovement>();
     }
 	
 	// Update is called once per frame
@@ -57,6 +57,7 @@ public class NetworkMovement : Photon.MonoBehaviour {
             stream.SendNext(transform.rotation);
             stream.SendNext(characterMovement.localVelocity);
             stream.SendNext(characterMovement.movementSpeed);
+            if (PhotonNetwork.isMasterClient && IsGameStarting) { stream.SendNext(IsGameStarting); IsGameStarting = false; }
         }
         else
         {
@@ -65,6 +66,8 @@ public class NetworkMovement : Photon.MonoBehaviour {
             networkRotation = (Quaternion)stream.ReceiveNext();
             networkVelocity = (Vector3)stream.ReceiveNext();
             movementSpeed = (float)stream.ReceiveNext();
+            if (!PhotonNetwork.isMasterClient && !IsGameStarting) { IsGameStarting = (bool)stream.ReceiveNext(); }
+
             lastTimestamp = info.timestamp;
         }
     }

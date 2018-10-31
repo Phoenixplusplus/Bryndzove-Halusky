@@ -2,16 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+enum RoomsListInfo
+{
+    STATUS,
+    PASSWORD,
+    BLUE_TEAM_CURRENT_COUNT,
+    RED_TEAM_CURRENT_COUNT
+}
+
 public class NetworkManager : Photon.MonoBehaviour {
 
     protected string roomName = "I'm hungry";
     protected TypedLobby lobbyName = new TypedLobby("NewLobby", LobbyType.Default);
     protected RoomInfo[] roomsList;
+    // TODO NOT IMPLEMENTED
+    // TODO NOT IMPLEMENTED
+    // TODO NOT IMPLEMENTED
+    protected string[] additionalRoomsListInfo = new string[4];
     protected GameManager GM;
     protected UserInterfaceManager UI_Manager;
     protected int playersOnline;
     private GameObject lobbyCamera;
-    public GameObject Character;
+    protected bool IsGameRunning;
+    protected bool IsGameStarting;
+    [SerializeField]
+    private GameObject Character;
 
     // Use this for initialization
     void Start()
@@ -19,30 +34,64 @@ public class NetworkManager : Photon.MonoBehaviour {
         PhotonNetwork.ConnectUsingSettings("v4.2");
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         lobbyCamera = GameObject.Find("LobbyCamera");
+        IsGameRunning = false;
+        IsGameStarting = false;
+    }
+
+    // TODO NOT IMPLEMENTED
+    // TODO NOT IMPLEMENTED
+    // TODO NOT IMPLEMENTED
+    void SetPropertiesListedInLobby(string[] propsListedInLobby)
+    {
+        propsListedInLobby = additionalRoomsListInfo;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Update the lists while is inside the lobby or move it into refresh button function or even delete ???????????
-        // Update the lists while is inside the lobby or move it into refresh button function or even delete ???????????
-        // Update the lists while is inside the lobby or move it into refresh button function or even delete ???????????
-        // Update the lists while is inside the lobby or move it into refresh button function or even delete ???????????
-        //OnReceivedRoomListUpdate();
+        if (PhotonNetwork.inRoom)
+        {
+            if (IsGameRunning)
+            {
+            //    Debug.Log("Inside the room, and running the game ");
+                OnGamePlay();
+            }
+            else if (!PhotonNetwork.isMasterClient && IsGameStarting)
+            {
+                StartGame();
+            }
+
+            else
+            {
+           //     Debug.Log("Inside the room lobby ");
+                OnInsideRoomLobby();
+            }
+        }
+        else if (PhotonNetwork.insideLobby)
+        {
+           // Debug.Log("Inside the lobby ");
+            OnInsideLobby();
+
+            // for (int i = 0; i < 2; i++)
+            {
+                //     OnInsideLobby();
+
+                //      Debug.Log("Inside the lobby " + i);
+            }
+        }
+        else if (!PhotonNetwork.connected)
+        {
+          //  Debug.Log("Not Connected ");
+            OnConnecting();
+        }
     }
 
-    public void JoinRoom(int roomNumber)
-    {
-      //  if (roomsList[roomNumber].PlayerCount < roomsList[roomNumber].MaxPlayers)
-      //  {
-      //      Debug.Log("PlayerCount " + roomsList[roomNumber].PlayerCount);
-       //     PhotonNetwork.JoinRoom(roomsList[roomNumber].Name);
-      //  }
-      //  else // Show UI the room is full
-       // {
+    public virtual void OnInsideLobby()     {}
+    public virtual void OnGamePlay()       {}
+    public virtual void OnInsideRoomLobby() {}
+    public virtual void OnConnecting()      {}
 
-      //  }
-    }
+
 
     void OnConnectedToMaster()
     {
@@ -67,13 +116,24 @@ public class NetworkManager : Photon.MonoBehaviour {
 
     void OnJoinedRoom()
     {
+        Debug.Log("Connected to " + "'" + PhotonNetwork.room.Name + "'" + " - Players(" + PhotonNetwork.playerList.Length + ")"); 
+    }
+
+    public void StartGame()
+    {
         // lock/hide cursor and delete default camera
         GM.LockHideCursor();
         if (lobbyCamera != null) lobbyCamera.SetActive(false);
-
-        Debug.Log("Connected to " + "'" + PhotonNetwork.room.Name + "'" + " - Players(" + PhotonNetwork.playerList.Length + ")");
-
         SetupAndSpawnCharacter();
+        IsGameRunning = true;
+        IsGameStarting = true;
+    }
+
+    public void LeaveRoomFromRoomLobby()
+    {
+        PhotonNetwork.LeaveRoom();
+        if (IsGameRunning) IsGameRunning = false;
+        if (IsGameStarting) IsGameStarting = false;
     }
 
     void SetupAndSpawnCharacter()
