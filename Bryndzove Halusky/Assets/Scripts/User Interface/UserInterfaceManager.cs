@@ -15,6 +15,7 @@ public class UserInterfaceManager : NetworkManager
         CNVS_Lobby = GameObject.Find("CNV_MainMenu").GetComponent<Canvas>(); ;
         m_TXT_ConnectingToServer = CNVS_Lobby.GetComponentInChildren<Text>();
         CNVS_Lobby.transform.GetChild(2).transform.GetChild(4).gameObject.SetActive(false);
+        CNVS_Lobby.transform.GetChild(2).transform.GetChild(5).gameObject.SetActive(false);
         CNVS_Lobby.transform.GetChild(2).gameObject.SetActive(false);
         UI_Manager = this;
     }

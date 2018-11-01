@@ -24,7 +24,6 @@ public class NetworkManager : Photon.MonoBehaviour {
     protected int playersOnline;
     private GameObject lobbyCamera;
     protected bool IsGameRunning;
-    protected bool IsGameStarting;
     [SerializeField]
     private GameObject Character;
 
@@ -35,7 +34,6 @@ public class NetworkManager : Photon.MonoBehaviour {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         lobbyCamera = GameObject.Find("LobbyCamera");
         IsGameRunning = false;
-        IsGameStarting = false;
     }
 
     // TODO NOT IMPLEMENTED
@@ -51,16 +49,11 @@ public class NetworkManager : Photon.MonoBehaviour {
     {
         if (PhotonNetwork.inRoom)
         {
-            if (IsGameRunning)
+            if(IsGameRunning)
             {
-            //    Debug.Log("Inside the room, and running the game ");
+                //    Debug.Log("Inside the room, and running the game ");
                 OnGamePlay();
             }
-            else if (!PhotonNetwork.isMasterClient && IsGameStarting)
-            {
-                StartGame();
-            }
-
             else
             {
            //     Debug.Log("Inside the room lobby ");
@@ -122,18 +115,25 @@ public class NetworkManager : Photon.MonoBehaviour {
     public void StartGame()
     {
         // lock/hide cursor and delete default camera
+
         GM.LockHideCursor();
         if (lobbyCamera != null) lobbyCamera.SetActive(false);
         SetupAndSpawnCharacter();
         IsGameRunning = true;
-        IsGameStarting = true;
+
+        if (PhotonNetwork.isMasterClient) photonView.RPC("StartTheGame", PhotonTargets.All, null);
+    }
+
+    [PunRPC] void StartTheGame()
+    {
+        Debug.Log("The Game Has Starteeeeeeeeeeeeeeeeeeed");
+        if (!PhotonNetwork.isMasterClient) StartGame();
     }
 
     public void LeaveRoomFromRoomLobby()
     {
         PhotonNetwork.LeaveRoom();
-        if (IsGameRunning) IsGameRunning = false;
-        if (IsGameStarting) IsGameStarting = false;
+        IsGameRunning = false;
     }
 
     void SetupAndSpawnCharacter()

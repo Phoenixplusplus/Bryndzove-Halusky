@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_RoomButton : MonoBehaviour
+public class UI_RoomButton : Photon.MonoBehaviour
 {
     public int ID;
 

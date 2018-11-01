@@ -86,7 +86,7 @@ public class UI_CreateGame : MonoBehaviour
         m_playersCount = 4;
 
         // Reset the room name
-        m_roomName.text = "";
+        if (m_roomName != null) m_roomName.text = "";
 
         // Set the buttons colors
         BTN_IMG_1vs1.color = m_colorNotSelected;

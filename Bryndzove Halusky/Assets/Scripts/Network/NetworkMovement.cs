@@ -23,9 +23,9 @@ public class NetworkMovement : NetworkManager
         pCharacter = transform.root.gameObject;
         characterMovement = pCharacter.GetComponent<C_CharacterMovement>();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update ()
     {
         if (photonView.isMine)
         {
@@ -57,7 +57,6 @@ public class NetworkMovement : NetworkManager
             stream.SendNext(transform.rotation);
             stream.SendNext(characterMovement.localVelocity);
             stream.SendNext(characterMovement.movementSpeed);
-            if (PhotonNetwork.isMasterClient && IsGameStarting) { stream.SendNext(IsGameStarting); IsGameStarting = false; }
         }
         else
         {
@@ -66,7 +65,6 @@ public class NetworkMovement : NetworkManager
             networkRotation = (Quaternion)stream.ReceiveNext();
             networkVelocity = (Vector3)stream.ReceiveNext();
             movementSpeed = (float)stream.ReceiveNext();
-            if (!PhotonNetwork.isMasterClient && !IsGameStarting) { IsGameStarting = (bool)stream.ReceiveNext(); }
 
             lastTimestamp = info.timestamp;
         }
