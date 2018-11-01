@@ -110,20 +110,21 @@ public class NetworkManager : Photon.MonoBehaviour {
     void OnJoinedRoom()
     {
         Debug.Log("Connected to " + "'" + PhotonNetwork.room.Name + "'" + " - Players(" + PhotonNetwork.playerList.Length + ")");
-        StartGame();
+        //StartGame();
     }
 
     public void StartGame()
     {
-        photonView.RPC("StartTheGame", PhotonTargets.All, null);
+        //photonView.RPC("StartTheGame", PhotonTargets.All, null);
+        if (lobbyCamera != null) lobbyCamera.SetActive(false);
+        SetupAndSpawnCharacter();
+        IsGameRunning = true;
     }
 
     [PunRPC] void StartTheGame()
     {
         GM.LockHideCursor();
-        if (lobbyCamera != null) lobbyCamera.SetActive(false);
-        SetupAndSpawnCharacter();
-        IsGameRunning = true;
+
     }
 
     public void LeaveRoomFromRoomLobby()

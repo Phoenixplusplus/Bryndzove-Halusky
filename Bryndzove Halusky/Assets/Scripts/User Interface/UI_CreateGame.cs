@@ -86,13 +86,13 @@ public class UI_CreateGame : MonoBehaviour
         m_playersCount = 4;
 
         // Reset the room name
-        if (m_roomName != null) m_roomName.text = "";
+        if (m_roomName) m_roomName.text = "";
 
         // Set the buttons colors
-        BTN_IMG_1vs1.color = m_colorNotSelected;
-        BTN_IMG_2vs2.color = m_colorSelected;
-        BTN_IMG_3vs3.color = m_colorNotSelected;
-        BTN_IMG_4vs4.color = m_colorNotSelected;
+        if (BTN_IMG_1vs1) BTN_IMG_1vs1.color = m_colorNotSelected;
+        if (BTN_IMG_2vs2) BTN_IMG_2vs2.color = m_colorSelected;
+        if (BTN_IMG_3vs3) BTN_IMG_3vs3.color = m_colorNotSelected;
+        if (BTN_IMG_4vs4) BTN_IMG_4vs4.color = m_colorNotSelected;
     }
 }
 
