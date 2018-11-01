@@ -19,7 +19,7 @@ public class NetworkManager : Photon.MonoBehaviour {
     // TODO NOT IMPLEMENTED
     // TODO NOT IMPLEMENTED
     protected string[] additionalRoomsListInfo = new string[4];
-    protected GameManager GM;
+    public GameManager GM;
     protected UserInterfaceManager UI_Manager;
     protected int playersOnline;
     private GameObject lobbyCamera;
@@ -115,15 +115,18 @@ public class NetworkManager : Photon.MonoBehaviour {
 
     public void StartGame()
     {
-        //photonView.RPC("StartTheGame", PhotonTargets.All, null);
-        if (lobbyCamera != null) lobbyCamera.SetActive(false);
-        SetupAndSpawnCharacter();
-        IsGameRunning = true;
+        photonView.RPC("StartTheGame", PhotonTargets.All, null);
     }
 
     [PunRPC] void StartTheGame()
     {
-        GM.LockHideCursor();
+        NetworkManager GO = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        GameObject lobbyCamera = GameObject.Find("LobbyCamera");
+        if (lobbyCamera != null) lobbyCamera.SetActive(false);
+        GO.GM.LockHideCursor();
+        GO.SetupAndSpawnCharacter();
+        GO.IsGameRunning = true;
+        Debug.Log(GO.name);
 
     }
 

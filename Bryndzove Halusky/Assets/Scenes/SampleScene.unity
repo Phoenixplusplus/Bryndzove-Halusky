@@ -1513,7 +1513,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2015930738}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9987972
+  m_Size: 0.99964184
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3111,6 +3111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac972351a5d9bc45a8cbe5db8d0a211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GM: {fileID: 0}
   Character: {fileID: 0}
 --- !u!4 &316097479
 Transform:
@@ -3627,7 +3628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000018088125, y: 0.20829345}
+  m_AnchoredPosition: {x: 0.0000018088125, y: -0.000016346505}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &397679362
@@ -4504,6 +4505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 491140182}
   - component: {fileID: 491140183}
+  - component: {fileID: 491140184}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -4535,7 +4537,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b4740e8851829428ee21ea19a76e39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GM: {fileID: 0}
   Character: {fileID: 1170824106911934, guid: e448c9754b010b24e8f8362116349b73, type: 2}
+--- !u!114 &491140184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 491140181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 5
+  instantiationId: 5
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1 &492297228
 GameObject:
   m_ObjectHideFlags: 0
