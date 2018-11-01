@@ -114,20 +114,15 @@ public class NetworkManager : Photon.MonoBehaviour {
 
     public void StartGame()
     {
-        // lock/hide cursor and delete default camera
-
-        GM.LockHideCursor();
-        if (lobbyCamera != null) lobbyCamera.SetActive(false);
-        SetupAndSpawnCharacter();
-        IsGameRunning = true;
-
-        if (PhotonNetwork.isMasterClient) photonView.RPC("StartTheGame", PhotonTargets.All, null);
+        photonView.RPC("StartTheGame", PhotonTargets.All, null);
     }
 
     [PunRPC] void StartTheGame()
     {
-        Debug.Log("The Game Has Starteeeeeeeeeeeeeeeeeeed");
-        if (!PhotonNetwork.isMasterClient) StartGame();
+        GM.LockHideCursor();
+        if (lobbyCamera != null) lobbyCamera.SetActive(false);
+        SetupAndSpawnCharacter();
+        IsGameRunning = true;
     }
 
     public void LeaveRoomFromRoomLobby()
