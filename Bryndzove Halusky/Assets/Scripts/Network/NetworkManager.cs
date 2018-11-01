@@ -109,7 +109,8 @@ public class NetworkManager : Photon.MonoBehaviour {
 
     void OnJoinedRoom()
     {
-        Debug.Log("Connected to " + "'" + PhotonNetwork.room.Name + "'" + " - Players(" + PhotonNetwork.playerList.Length + ")"); 
+        Debug.Log("Connected to " + "'" + PhotonNetwork.room.Name + "'" + " - Players(" + PhotonNetwork.playerList.Length + ")");
+        StartGame();
     }
 
     public void StartGame()
